@@ -2,64 +2,64 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="1qSsvoeKsTmHhD9TmRuuoj01lt6u3g4AVCP9L_xEkT8" />
-  <title>Tips Cepat Turun Berat Badan dalam 5 Hari</title>
-  <meta http-equiv="refresh" content="5;url=https://cerdaspk228.com">
+  <title>Promo Cuan Gratis!</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    .cta {
-      margin-top: 30px;
-      padding: 15px;
-      background-color: #dff0d8;
-      border: 1px solid #d0e9c6;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .cta a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #27ae60;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-    }
+    body { font-family: sans-serif; text-align: center; padding: 20px; background: #fff5e6; }
+    button { padding: 12px 20px; margin: 8px; background: #a96700; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #8a5900; }
+    input { padding: 12px; border-radius: 5px; border: 1px solid #ccc; width: 250px; margin: 5px; }
+    #promo { margin: 20px 0; font-size: 18px; }
   </style>
 </head>
 <body>
-  <h1>Tips Cepat Turun Berat Badan dalam Waktu 5 Hari</h1>
-  <p>Ingin cepat langsing dalam waktu singkat? Yuk coba beberapa tips berikut yang bisa bantu kamu menurunkan berat badan secara sehat dan alami hanya dalam 5 hari!</p>
+  <h2>🎁 Kesempatan Dapet Cuan Gratis 🎁</h2>
+  <p id="promo">Klik tombol di bawah untuk dapatkan promo spesial!</p>
 
-  <h2>1. Kurangi Karbohidrat Olahan</h2>
-  <p>Ganti nasi putih dan roti tawar dengan sumber karbohidrat kompleks seperti oats, kentang rebus, atau nasi merah.</p>
+  <button onclick="generatePromo()">Generate Promo</button>
+  <button onclick="copyPromo()">Copy</button>
+  <br><br>
 
-  <h2>2. Perbanyak Konsumsi Sayuran & Buah</h2>
-  <p>Sayuran kaya serat bisa bantu kenyang lebih lama dan mendukung metabolisme tubuh.</p>
+  <input type="text" id="nomor" placeholder="Masukkan nomor HP (628xxxx)">
+  <button onclick="kirimWA()">Kirim ke WhatsApp</button>
 
-  <h2>3. Rutin Minum Air Putih</h2>
-  <p>Minum minimal 2 liter air per hari bisa membantu membuang racun dan mempercepat pembakaran lemak.</p>
+  <script>
+    const promos = [
+      { teks: "Masuk ke kisahpasti.ink dan pake kode XF77Q1 buat dapetin Rp101.259.", link: "https://kisahpasti.ink" },
+      { teks: "Buruan ke cuanpasti.club pake kode XP99LQ dapetin Rp150.000 gratis!", link: "https://cuanpasti.club" },
+      { teks: "Main slot gratis di slotbonus.xyz kode AK55ZY claim bonus Rp200.000!", link: "https://slotbonus.xyz" },
+      { teks: "Ambil bonus slot sekarang di gacorpasti.top kode JQ88WS Rp250.000 menanti!", link: "https://gacorpasti.top" },
+      { teks: "Claim saldo gratis Rp300.000 di bonuscuan.click kode ZY55AA.", link: "https://bonuscuan.click" },
+      { teks: "Spin gratis hari ini di spingratis.fun pake kode PQ11MM.", link: "https://spingratis.fun" },
+      { teks: "Langsung withdraw Rp500.000 tanpa deposit di cuansegar.live kode LL88CC.", link: "https://cuansegar.live" },
+      { teks: "Cuan auto cair ke gacorbos.com pake kode BB99SS Rp150.000!", link: "https://gacorbos.com" },
+      { teks: "Mega bonus Rp600.000 buat member baru di slotuntung.club kode VV88TT.", link: "https://slotuntung.club" }
+      // Tambahin promo baru di sini bro kalau perlu
+    ];
 
-  <h2>4. Olahraga Setiap Hari</h2>
-  <p>Gabungkan kardio dan latihan ringan seperti yoga atau HIIT selama 30 menit setiap hari.</p>
+    let currentPromo = promos[0];
 
-  <h2>5. Tidur Cukup dan Hindari Stres</h2>
-  <p>Kurang tidur dan stres berlebihan bisa memperlambat metabolisme tubuhmu, jadi pastikan tidur 7-8 jam setiap malam.</p>
+    function generatePromo() {
+      const random = Math.floor(Math.random() * promos.length);
+      currentPromo = promos[random];
+      document.getElementById('promo').innerText = currentPromo.teks;
+    }
 
-  <div class="cta">
-    <p>Bonus Tips: Ingin tahu rahasia tersembunyi para selebriti yang cepat langsing? Klik tombol di bawah ini atau tunggu 5 detik!</p>
-    <a href="https://cerdaspk228.com" target="_blank">Lihat Rahasianya</a>
-  </div>
+    function copyPromo() {
+      const promoText = `${currentPromo.teks}\nKlik disini: ${currentPromo.link}`;
+      navigator.clipboard.writeText(promoText).then(() => {
+        alert("Promo disalin!");
+      });
+    }
+
+    function kirimWA() {
+      const nomor = document.getElementById('nomor').value;
+      const pesan = encodeURIComponent(`${currentPromo.teks}\nKlik disini: ${currentPromo.link}`);
+      if (nomor) {
+        window.open(`https://wa.me/${nomor}?text=${pesan}`, '_blank');
+      } else {
+        alert("Masukkan nomor dulu bro!");
+      }
+    }
+  </script>
 </body>
 </html>
