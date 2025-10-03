@@ -2,108 +2,138 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Promo Cuan Gratis!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisahSlot - Bonus New Member & Promo 2025</title>
+  <meta name="description" content="KisahSlot - Situs hiburan online dengan promo bonus new member, free saldo anti hoax, dan event seru setiap hari.">
   <style>
     body {
-      font-family: sans-serif;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8e5;
+      color: #222;
+      line-height: 1.5;
+    }
+    header {
+      background: #ffcc00;
+      color: #000;
       text-align: center;
-      padding: 20px;
-      background-image: url('https://i.imgur.com/ZbEoDQ3.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: white;
-      position: relative;
-      z-index: 1;
+      padding: 20px 10px;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: -1;
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 900;
     }
-
-    button {
-      padding: 12px 20px;
-      margin: 8px;
-      background: #a96700;
-      color: orange;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    header p {
+      margin: 6px 0 0;
+      font-size: 16px;
+      font-weight: 500;
     }
-
-    button:hover {
-      background: #8a5900;
+    .banner {
+      background: linear-gradient(135deg, #ffb300, #ff4747);
+      color: #fff;
+      padding: 25px 15px;
+      text-align: center;
     }
-
-    input {
-      padding: 12px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      width: 250px;
-      margin: 5px;
+    .banner h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
     }
-
-    #promo {
-      margin: 20px 0;
+    .banner p {
+      margin: 8px 0 0;
       font-size: 18px;
+      font-weight: 600;
+    }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 14px 22px;
+      background: #000;
+      color: #fff;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+    .cta-btn:hover {
+      background: #333;
+    }
+    main {
+      max-width: 960px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    footer {
+      background: #000;
+      color: #fff;
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .promo-highlight {
+      font-size: 20px;
+      color: #d60000;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h2>🎁 Kesempatan Dapet Rumah RIO 🎁</h2>
-  <p id="promo">Klik tombol di bawah untuk dapatkan promo spesial!</p>
+  <header>
+    <h1>🎁 KisahSlot</h1>
+    <p>Bonus New Member & Free Saldo Anti Hoax</p>
+  </header>
 
-  <button onclick="generatePromo()">Generate Promo</button>
-  <button onclick="copyPromo()">Copy</button>
-  <br><br>
+  <section class="banner">
+    <h2>BONUS NEW MEMBER</h2>
+    <p>Modal daftar langsung dapat saldo gratis!</p>
+    <p class="promo-highlight">FREE SALDO ✅ 100% Anti Hoax</p>
+    <a class="cta-btn" href="https://kisahslot1a.com">👉 Gabung Sekarang</a>
+  </section>
 
-  <input type="text" id="nomor" placeholder="Masukkan nomor HP (628xxxx)">
-  <button onclick="kirimWA()">Kirim ke WhatsApp</button>
+  <main>
+    <div class="card">
+      <h3>Kenapa pilih KisahSlot?</h3>
+      <ul>
+        <li>✅ Modal daftar langsung dapat saldo</li>
+        <li>✅ Proses cepat & aman</li>
+        <li>✅ Event promo setiap hari</li>
+        <li>✅ Customer service 24 jam</li>
+      </ul>
+      <a class="cta-btn" href="https://kisahslot1a.com">Coba Gratis</a>
+    </div>
 
-  <script>
-    const promos = [
-      { teks: "Masuk ke kisahpasti.ink dan pake kode XF77Q1 buat dapetin Rp101.259.", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Buruan ke cuanpasti.club pake kode XP99LQ dapetin Rp150.000 gratis!", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Main slot gratis di slotbonus.xyz kode AK55ZY claim bonus Rp200.000!", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Ambil bonus slot sekarang di gacorpasti.top kode JQ88WS Rp250.000 menanti!", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Claim saldo gratis Rp300.000 di bonuscuan.click kode ZY55AA.", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Spin gratis hari ini di spingratis.fun pake kode PQ11MM.", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Langsung withdraw Rp500.000 tanpa deposit di cuansegar.live kode LL88CC.", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Cuan auto cair ke gacorbos.com pake kode BB99SS Rp150.000!", link: "https://imgur.com/wupU5Ba" },
-      { teks: "Mega bonus Rp600.000 buat member baru di slotuntung.club kode VV88TT.", link: "https://imgur.com/wupU5Ba" },
-    ];
+    <div class="card">
+      <h3>Cara Klaim Bonus</h3>
+      <ol>
+        <li>Daftar akun baru lewat tombol gabung.</li>
+        <li>Login dan klaim saldo gratis.</li>
+        <li>Mainkan game favoritmu.</li>
+        <li>Nikmati kemenangan & tarik saldo!</li>
+      </ol>
+    </div>
 
-    let currentPromo = promos[0];
+    <div class="card">
+      <h3>Testimoni Member</h3>
+      <p>"Baru daftar langsung dapat saldo free, cair tanpa ribet. Mantap!" – Andi</p>
+      <p>"Promonya real, bukan tipu-tipu. Recommended banget!" – Rina</p>
+    </div>
+  </main>
 
-    function generatePromo() {
-      const random = Math.floor(Math.random() * promos.length);
-      currentPromo = promos[random];
-      document.getElementById('promo').innerText = currentPromo.teks;
-    }
-
-    function copyPromo() {
-      const promoText = `${currentPromo.teks}\nKlik disini: ${currentPromo.link}`;
-      navigator.clipboard.writeText(promoText).then(() => {
-        alert("Promo disalin!");
-      });
-    }
-
-    function kirimWA() {
-      const nomor = document.getElementById('nomor').value;
-      const pesan = encodeURIComponent(`${currentPromo.teks}\nKlik disini: ${currentPromo.link}`);
-      if (nomor) {
-        window.open(`https://wa.me/${nomor}?text=${pesan}`, '_blank');
-      } else {
-        alert("Masukkan nomor dulu bro!");
-      }
-    }
-  </script>
+  <footer>
+    © 2025 KisahSlot | Semua hak dilindungi. <br>
+    <a href="https://kisahslot1a.com" style="color:#ffcc00;font-weight:bold;text-decoration:none;">Kunjungi Situs Resmi</a>
+  </footer>
 </body>
 </html>
