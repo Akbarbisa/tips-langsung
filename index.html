@@ -127,7 +127,7 @@
       color: #888;
     }
     #result {
-      min-height: 70px;
+      min-height: 80px;
       padding: 18px;
       border-radius: 18px;
       margin-top: 20px;
@@ -136,12 +136,9 @@
       text-align: center;
       border: 1px solid #333;
     }
-    .jackpot-glow {
-      animation: glow 1.5s infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff0; }
-      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #ff0; }
+    .sad-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -171,16 +168,13 @@
 <audio id="spinSound" preload="auto">
   <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
 </audio>
-<audio id="winSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 // URUTAN SESUAI GAMBAR (dari ZONK, clockwise)
 const prizes = [
-  {text: "ZONK",     color: "#2c3e50", zonk: true},  // index 0
+  {text: "ZONK",     color: "#2c3e50", zonk: true},  // index 0 → TEPAT DI PANAH
   {text: "Rp50K",    color: "#ffe66d"},           // index 1
-  {text: "Rp1JT",    color: "#ffd700", glow: true}, // index 2
+  {text: "Rp1JT",    color: "#ffd700"},           // index 2
   {text: "Rp500K",   color: "#1dd1a1"},           // index 3
   {text: "Rp250K",   color: "#ff9ff3"},           // index 4
   {text: "Rp100K",   color: "#48dbfb"}            // index 5
@@ -192,7 +186,6 @@ const spinBtn = document.getElementById('spinBtn');
 const resultDiv = document.getElementById('result');
 const uniqueCodeInput = document.getElementById('uniqueCode');
 const spinSound = document.getElementById('spinSound');
-const winSound = document.getElementById('winSound');
 let isSpinning = false;
 
 // 1x spin per device
@@ -200,7 +193,11 @@ if (localStorage.getItem('hasSpun') === 'true') {
   uniqueCodeInput.disabled = true;
   spinBtn.disabled = true;
   spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIPUTAR';
-  resultDiv.innerHTML = '<div class="text-warning">Spin hanya 1x per member!</div>';
+  resultDiv.innerHTML = `
+    <div class="sad-emoji">:(</div>
+    <div class="text-danger fs-3">ZONK!</div>
+    <small class="text-muted">Coba lagi besok ya!</small>
+  `;
 }
 
 // Gambar roda
@@ -240,7 +237,7 @@ uniqueCodeInput.addEventListener('input', () => {
   spinBtn.innerHTML = canSpin ? '<i class="fas fa-play"></i> SPIN SEKARANG' : '<i class="fas fa-lock"></i> MASUKKAN KODE';
 });
 
-// SPIN — SELALU KE ZONK
+// SPIN — PANAH TEPAT DI ZONK
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
   isSpinning = true;
@@ -248,27 +245,22 @@ spinBtn.addEventListener('click', () => {
   resultDiv.innerHTML = '';
   spinSound.play().catch(() => {});
 
-  // KONTROL: 0 = ZONK (sesuai urutan array)
-  const forcedIndex = 0; // ZONK SELALU
-
-  // Hitung rotasi agar berhenti tepat di ZONK (di bawah panah)
-  const segmentAngle = 360 / prizes.length; // 60 derajat per segmen
-  const targetAngle = forcedIndex * segmentAngle + (segmentAngle / 2); // tengah segmen
-  const fullSpins = 8; // 8 putaran penuh
-  const totalRotation = fullSpins * 360 + targetAngle + Math.random() * 20 - 10;
+  const forcedIndex = 0; // ZONK (index 0)
+  const segmentAngle = 360 / prizes.length; // 60°
+  const targetCenter = forcedIndex * segmentAngle + (segmentAngle / 2); // tengah ZONK
+  const fullSpins = 8;
+  const randomOffset = Math.random() * 10 - 5; // ±5° biar natural
+  const totalRotation = fullSpins * 360 + targetCenter + randomOffset;
 
   wheel.style.transform = `rotate(${totalRotation}deg)`;
 
   setTimeout(() => {
     spinSound.pause();
-    const prize = prizes[forcedIndex];
-
-    if (prize.zonk) {
-      resultDiv.innerHTML = `
-        <div class="text-danger fs-3">ZONK! [Emoticon sedih]</div>
-        <small class="text-muted">Coba lagi besok ya!</small>
-      `;
-    }
+    resultDiv.innerHTML = `
+      <div class="sad-emoji">:(</div>
+      <div class="text-danger fs-3">ZONK!</div>
+      <small class="text-muted">Coba lagi besok ya!</small>
+    `;
 
     localStorage.setItem('hasSpun', 'true');
     uniqueCodeInput.disabled = true;
