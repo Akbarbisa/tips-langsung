@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lucky Spin KisahSlot - Bonus New Member!</title>
+  <title>KisahSlot - Lucky Spin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
@@ -38,6 +38,7 @@
       -webkit-text-fill-color: transparent;
       text-align: center;
       margin-bottom: 8px;
+      position: relative;
       z-index: 10;
     }
     .subtitle {
@@ -121,13 +122,15 @@
       width: 100%;
       margin-top: 20px;
       box-shadow: 0 8px 25px rgba(255,107,107,0.6);
+      transition: all 0.3s;
     }
     .btn-spin:disabled {
       background: #444;
       color: #888;
+      cursor: not-allowed;
     }
     #result {
-      min-height: 80px;
+      min-height: 70px;
       padding: 18px;
       border-radius: 18px;
       margin-top: 20px;
@@ -136,9 +139,23 @@
       text-align: center;
       border: 1px solid #333;
     }
-    .sad-emoji {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+    .jackpot-glow {
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff0; }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #ff0; }
+    }
+    .confetti {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: #f00;
+      top: -10px;
+      z-index: 1000;
+      animation: fall 3s linear infinite;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
   </style>
 </head>
@@ -165,19 +182,22 @@
   <div id="result"></div>
 </div>
 
+<!-- Audio -->
 <audio id="spinSound" preload="auto">
   <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
 </audio>
+<audio id="winSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-// URUTAN SESUAI GAMBAR (dari ZONK, clockwise)
 const prizes = [
-  {text: "ZONK",     color: "#2c3e50", zonk: true},  // index 0 → TEPAT DI PANAH
-  {text: "Rp50K",    color: "#ffe66d"},           // index 1
-  {text: "Rp1JT",    color: "#ffd700"},           // index 2
-  {text: "Rp500K",   color: "#1dd1a1"},           // index 3
-  {text: "Rp250K",   color: "#ff9ff3"},           // index 4
-  {text: "Rp100K",   color: "#48dbfb"}            // index 5
+  {text: "Rp50K", color: "#ffe66d"},
+  {text: "ZONK", color: "#2c3e50", zonk: true},
+  {text: "Rp100K", color: "#48dbfb"},
+  {text: "Rp250K", color: "#ff9ff3"},
+  {text: "Rp500K", color: "#1dd1a1"},
+  {text: "Rp1JT", color: "#ffd700", glow: true}
 ];
 
 const wheel = document.getElementById('wheel');
@@ -186,18 +206,15 @@ const spinBtn = document.getElementById('spinBtn');
 const resultDiv = document.getElementById('result');
 const uniqueCodeInput = document.getElementById('uniqueCode');
 const spinSound = document.getElementById('spinSound');
+const winSound = document.getElementById('winSound');
 let isSpinning = false;
 
-// 1x spin per device
+// Cek sudah spin belum (1x per device)
 if (localStorage.getItem('hasSpun') === 'true') {
   uniqueCodeInput.disabled = true;
   spinBtn.disabled = true;
   spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIPUTAR';
-  resultDiv.innerHTML = `
-    <div class="sad-emoji">:(</div>
-    <div class="text-danger fs-3">ZONK!</div>
-    <small class="text-muted">Coba lagi besok ya!</small>
-  `;
+  resultDiv.innerHTML = '<div class="text-warning">Spin hanya 1x per member!</div>';
 }
 
 // Gambar roda
@@ -228,16 +245,29 @@ function drawWheel() {
   });
 }
 
+// Confetti
+function createConfetti() {
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = ['#f00','#0f0','#00f','#ff0','#f0f','#ff6b6b'][Math.floor(Math.random()*6)];
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+
 // Validasi kode
 uniqueCodeInput.addEventListener('input', () => {
   const code = uniqueCodeInput.value.trim();
   const valid = /^\d{4,6}$/.test(code);
-  const canSpin = valid && !isSpinning && localStorage.getItem('hasSpun') !== 'true';
-  spinBtn.disabled = !canSpin;
-  spinBtn.innerHTML = canSpin ? '<i class="fas fa-play"></i> SPIN SEKARANG' : '<i class="fas fa-lock"></i> MASUKKAN KODE';
+  spinBtn.disabled = !valid || isSpinning || localStorage.getItem('hasSpun') === 'true';
+  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN SEKARANG' : '<i class="fas fa-lock"></i> MASUKKAN KODE';
 });
 
-// SPIN — PANAH TEPAT DI ZONK
+// Spin
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
   isSpinning = true;
@@ -245,22 +275,31 @@ spinBtn.addEventListener('click', () => {
   resultDiv.innerHTML = '';
   spinSound.play().catch(() => {});
 
-  const forcedIndex = 0; // ZONK (index 0)
-  const segmentAngle = 360 / prizes.length; // 60°
-  const targetCenter = forcedIndex * segmentAngle + (segmentAngle / 2); // tengah ZONK
-  const fullSpins = 8;
-  const randomOffset = Math.random() * 10 - 5; // ±5° biar natural
-  const totalRotation = fullSpins * 360 + targetCenter + randomOffset;
+  // KONTROL HADIAH
+  let forcedIndex = 1; // 1 = ZONK (ubah 0-5)
 
-  wheel.style.transform = `rotate(${totalRotation}deg)`;
+  const spins = 8 + forcedIndex;
+  const degrees = spins * 360 + Math.random() * 360;
+  wheel.style.transform = `rotate(${degrees}deg)`;
 
   setTimeout(() => {
     spinSound.pause();
-    resultDiv.innerHTML = `
-      <div class="sad-emoji">:(</div>
-      <div class="text-danger fs-3">ZONK!</div>
-      <small class="text-muted">Coba lagi besok ya!</small>
-    `;
+    const prize = prizes[forcedIndex];
+
+    if (prize.zonk) {
+      resultDiv.innerHTML = `
+        <div class="text-danger fs-3">ZONK! 😢</div>
+        <small class="text-muted">Coba lagi besok ya!</small>
+      `;
+    } else {
+      winSound.play().catch(() => {});
+      createConfetti();
+      resultDiv.innerHTML = `
+        <div class="text-success fs-3 jackpot-glow">JACKPOT! 🎰</div>
+        <div class="text-warning fs-2 fw-bold">Kamu Dapat ${prize.text}</div>
+        <small class="text-success">Saldo masuk otomatis!</small>
+      `;
+    }
 
     localStorage.setItem('hasSpun', 'true');
     uniqueCodeInput.disabled = true;
