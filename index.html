@@ -1,321 +1,273 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Turnamen Padel Nasional 2025 — Microsite</title>
-  <meta name="description" content="Microsite turnamen padel: pendaftaran, leaderboard, galeri, dan klaim bonus new member." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KisahSlot - Lucky Spin New Member</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
   <style>
-    :root{
-      --bg:#0b0f1a; --card:#0f1830; --accent:#ffd13a; --muted:#9aa3c4;
-      --glass: rgba(255,255,255,0.04);
-      --maxw:1100px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1a0f, #1a2a1a);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Poppins',sans-serif;background:linear-gradient(180deg,var(--bg),#10162a);color:#eef2ff;}
-    header{max-width:var(--maxw);margin:24px auto;padding:20px;display:flex;align-items:center;gap:20px}
-    .logo{width:68px;height:68px;background:linear-gradient(135deg,#ffd13a,#ff8a00);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#081023;font-weight:700;font-size:20px}
-    .site-title h1{margin:0;font-size:1.2rem;color:var(--accent)}
-    .site-title p{margin:2px 0 0;font-size:0.9rem;color:var(--muted)}
-    main{max-width:var(--maxw);margin:0 auto;padding:18px}
-
-    .grid{display:grid;grid-template-columns:1fr 380px;gap:18px}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}}
-
-    /* Hero / Event details */
-    .hero{background:var(--card);padding:22px;border-radius:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-    .hero h2{margin:0;font-size:1.4rem;color:var(--accent)}
-    .hero p{color:var(--muted);margin-top:10px}
-    .meta{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
-    .meta .chip{background:var(--glass);padding:8px 12px;border-radius:10px;font-size:0.9rem;color:var(--muted)}
-
-    /* Form */
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px}
-    form .row{display:flex;gap:10px}
-    form input, form select{width:100%;padding:10px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);color:#eef2ff}
-    form label{font-size:0.85rem;color:var(--muted);margin-bottom:6px;display:block}
-    .btn{background:linear-gradient(90deg,#ff7b00,#ffb100);padding:12px;border-radius:10px;border:none;color:#07101a;font-weight:700;cursor:pointer}
-    .muted{color:var(--muted);font-size:0.9rem}
-
-    /* Sidebar */
-    .sidebar{position:sticky;top:18px}
-    .count{background:linear-gradient(90deg,#081528,rgba(255,255,255,0.02));padding:16px;border-radius:12px;text-align:center}
-    .count h3{margin:0;color:var(--accent)}
-    .count p{margin:6px 0 0;color:var(--muted)}
-
-    /* Leaderboard */
-    .leaderboard{margin-top:18px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
-    th{color:var(--muted);font-size:0.85rem}
-    td .name{font-weight:600}
-    .rank{width:40px;font-weight:700;color:var(--accent)}
-
-    /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
-    @media(max-width:560px){.gallery{grid-template-columns:repeat(2,1fr)}}
-    .gallery img{width:100%;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;display:block}
-
-    /* Utilities */
-    .small{font-size:0.85rem;color:var(--muted)}
-    .hidden{display:none}
-    .flex{display:flex;gap:8px;align-items:center}
-
-    /* Footer */
-    footer{max-width:var(--maxw);margin:28px auto;padding:18px;color:var(--muted);text-align:center}
-
-    /* Modal Lightbox */
-    .modal{position:fixed;inset:0;background:rgba(2,8,22,0.75);display:flex;align-items:center;justify-content:center;z-index:60;padding:20px}
-    .modal .box{max-width:900px;width:100%;background:#071025;padding:18px;border-radius:12px}
-    .modal img{width:100%;height:auto;border-radius:8px}
-
-    /* Admin area small */
-    .admin{margin-top:12px;display:flex;gap:8px;flex-direction:column}
-    .export{background:#122536;padding:10px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .spin-container {
+      max-width: 420px;
+      margin: 20px auto;
+      text-align: center;
+      padding: 25px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .ribbon {
+      position: absolute;
+      top: 15px;
+      right: -50px;
+      background: #e74c3c;
+      color: #fff;
+      padding: 8px 60px;
+      transform: rotate(45deg);
+      font-size: 0.9rem;
+      font-weight: bold;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+    #wheel {
+      width: 300px;
+      height: 300px;
+      margin: 30px auto;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), inset 0 0 20px rgba(0,0,0,0.5);
+      transition: transform 4.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    }
+    .pointer {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 40px solid #f1c40f;
+      filter: drop-shadow(0 5px 10px #000);
+      z-index: 5;
+    }
+    .btn-spin {
+      background: linear-gradient(45deg, #ff6b6b, #f9ca24);
+      border: none;
+      padding: 14px 50px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      margin-top: 10px;
+      box-shadow: 0 6px 20px rgba(255,107,107,0.5);
+      transition: all 0.3s;
+    }
+    .btn-spin:hover { transform: scale(1.05); }
+    .btn-spin:disabled { opacity: 0.6; cursor: not-allowed; }
+    .code-input {
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 5px;
+      font-weight: bold;
+      background: #111;
+      color: #0f0;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+    }
+    #result {
+      min-height: 60px;
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 15px;
+      background: rgba(0,0,0,0.5);
+      font-weight: bold;
+    }
+    .jackpot-glow {
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff0; }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #ff0; }
+    }
+    .confetti {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: #f00;
+      top: -10px;
+      z-index: 1000;
+      animation: fall 3s linear infinite;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    .prize-text { font-size: 14px; font-weight: bold; }
+    .zonk { color: #e74c3c; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">PDL</div>
-    <div class="site-title">
-      <h1>Turnamen Padel Nasional 2025</h1>
-      <p>Event komunitas — Daftar. Main. Menang. Klaim Bonus New Member (opsional dan sesuai persetujuan).</p>
+
+<div class="container py-4">
+  <div class="spin-container position-relative">
+    <div class="ribbon">NEW MEMBER ONLY</div>
+    
+    <h3 class="mb-2 text-warning">KISAH SLOT</h3>
+    <h5 class="text-success mb-4">Lucky Spin Khusus Member Baru!</h5>
+
+    <!-- Input Kode Unik -->
+    <div class="mb-4">
+      <input type="text" id="uniqueCode" class="form-control code-input" placeholder="XXXXXX" maxlength="6" autocomplete="off"/>
+      <small class="text-muted">Masukkan kode unik dari deposit (contoh: 20123)</small>
     </div>
-  </header>
 
-  <main>
-    <div class="grid">
-      <section>
-        <div class="hero card">
-          <h2>Turnamen Padel — Seri [Kota]</h2>
-          <p>Gabung turnamen padel komunitas dengan hadiah menarik, foto galeri final, dan leaderboard live. Pendaftaran gratis (atau biaya ringan tergantung penyelenggara).</p>
+    <!-- Pointer -->
+    <div class="pointer"></div>
 
-          <div class="meta">
-            <div class="chip">📅 15 Des 2025</div>
-            <div class="chip">📍 Lapangan Padel Sentral</div>
-            <div class="chip">⏱ Kuota: 64 Tim</div>
-            <div class="chip">🎁 Hadiah: Total Jutaan</div>
-          </div>
+    <!-- Roda Spin -->
+    <canvas id="wheel" width="300" height="300"></canvas>
 
-          <div style="margin-top:16px" class="small">Syarat: usia 18+ (centang saat daftar). Data yang kami minta hanya untuk keperluan info event & pengumuman—tidak meminta nomor rekening pada tahap pendaftaran.</div>
+    <!-- Tombol Spin -->
+    <button class="btn btn-spin btn-lg mt-3" id="spinBtn" disabled>
+      <i class="fas fa-play"></i> SPIN SEKARANG
+    </button>
 
-          <!-- Leaderboard -->
-          <div class="leaderboard card" id="leaderboardCard" style="margin-top:18px">
-            <h3 style="margin-top:0;color:var(--accent)">🏅 Leaderboard</h3>
-            <div class="small">Top 10 tim berdasarkan poin turnamen (data bisa diupdate oleh admin).</div>
-            <div style="overflow:auto;margin-top:10px">
-              <table id="leaderboardTable">
-                <thead>
-                  <tr><th class="rank">#</th><th>Tim</th><th>Skor</th></tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-
-            <div class="admin">
-              <div class="small">Admin quick add (privat):</div>
-              <div style="display:flex;gap:8px;">
-                <input id="adminName" placeholder="Nama Tim / Pemain" />
-                <input id="adminScore" placeholder="Skor" style="width:90px" />
-                <button class="btn" id="adminAdd">Tambahkan</button>
-              </div>
-              <div style="display:flex;gap:8px;margin-top:8px"><button class="export" id="exportLeaderboard">Export CSV</button><button class="export" id="resetLeaderboard">Reset</button></div>
-            </div>
-
-          </div>
-
-          <!-- Gallery -->
-          <div class="card" style="margin-top:18px">
-            <h3 style="margin:0;color:var(--accent)">📸 Galeri Turnamen</h3>
-            <div class="gallery" id="gallery">
-              <!-- placeholder images -> user can replace -->
-              <img src="https://picsum.photos/id/1011/800/600" alt="gallery1" data-full="https://picsum.photos/id/1011/1200/800">
-              <img src="https://picsum.photos/id/1025/800/600" alt="gallery2" data-full="https://picsum.photos/id/1025/1200/800">
-              <img src="https://picsum.photos/id/1027/800/600" alt="gallery3" data-full="https://picsum.photos/id/1027/1200/800">
-              <img src="https://picsum.photos/id/1043/800/600" alt="gallery4" data-full="https://picsum.photos/id/1043/1200/800">
-              <img src="https://picsum.photos/id/1050/800/600" alt="gallery5" data-full="https://picsum.photos/id/1050/1200/800">
-              <img src="https://picsum.photos/id/1062/800/600" alt="gallery6" data-full="https://picsum.photos/id/1062/1200/800">
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <aside class="sidebar">
-        <div class="card">
-          <h3 style="margin:0;color:var(--accent)">🔗 Daftar Sekarang</h3>
-          <p class="muted">Isi data minimal. Jangan minta rekening atau data keuangan. Klaim hadiah atau bonus hanya melalui proses verifikasi pemenang di kanal privat.</p>
-
-          <form id="regForm" style="margin-top:12px">
-            <label>Nama Lengkap</label>
-            <input id="r_name" required placeholder="Nama Tim / Pemain" />
-            <label>Nomor WhatsApp</label>
-            <input id="r_wa" required placeholder="08xx... (WA aktif)" />
-            <label>Email</label>
-            <input id="r_email" type="email" required placeholder="email@contoh.com" />
-            <label>Kota / Klub (opsional)</label>
-            <input id="r_city" placeholder="Jakarta / Bandung" />
-            <div style="margin-top:8px" class="small">
-              <input id="r_agree" type="checkbox" /> <label for="r_agree">Saya berusia 18+ dan setuju S&amp;K</label>
-            </div>
-            <div style="margin-top:12px;display:flex;gap:8px">
-              <button class="btn" type="submit">Daftar</button>
-              <button id="downloadRegs" class="export" type="button">Download CSV</button>
-            </div>
-          </form>
-
-          <div style="margin-top:12px" class="count">
-            <h3 id="spots">Kuota tersisa: 64</h3>
-            <p class="small">Pendaftaran: <span id="regCount">0</span> peserta terdaftar</p>
-          </div>
-
-          <div style="margin-top:12px" class="card small">
-            <div>🎁 Promo untuk peserta:</div>
-            <div style="margin-top:8px"><a id="bonusLink" href="#" class="btn" style="display:inline-block;background:linear-gradient(90deg,#28a745,#2ecb5a);color:#fff;text-decoration:none">Klaim BONUS NEW MEMBER</a></div>
-            <div class="small" style="margin-top:8px;color:var(--muted)">Link ini bersifat opsional — hanya peserta yang memilih menerima info promo akan dikirimi instruksi via WA/email.</div>
-          </div>
-
-        </div>
-
-        <div style="margin-top:12px" class="card small">
-          <h4 style="margin:0;color:var(--accent)">Quick Tips Promosi</h4>
-          <ol>
-            <li>Bagikan link microsite ke klub & toko peralatan</li>
-            <li>Gunakan referral: +1 bagi setiap team yang diajak</li>
-            <li>Live-stream final & tampilkan leaderboard</li>
-          </ol>
-        </div>
-
-      </aside>
-    </div>
-  </main>
-
-  <footer>
-    © 2025 Turnamen Padel Nasional — Privacy & Terms berlaku. Data pendaftar hanya digunakan untuk kepentingan event.
-  </footer>
-
-  <!-- Lightbox modal -->
-  <div id="modal" class="modal hidden" style="display:none">
-    <div class="box">
-      <button id="closeModal" style="float:right;background:#081528;color:var(--muted);border:none;padding:6px 8px;border-radius:8px;cursor:pointer">Tutup</button>
-      <img id="modalImg" src="" alt="" />
-    </div>
+    <!-- Hasil -->
+    <div id="result" class="mt-3"></div>
   </div>
 
-  <script>
-    // Basic data stores (localStorage keys)
-    const LS_REGS = 'padel_regs_v1';
-    const LS_LB = 'padel_lb_v1';
+  <div class="text-center mt-4 text-muted small">
+    <p>Hadiah: Rp50K | Rp100K | Rp250K | Rp500K | Rp1JT | ZONK</p>
+    <p>1x Spin per deposit | Minimal Rp20.000</p>
+  </div>
+</div>
 
-    // Utils
-    function loadJSON(key, fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(e){return fallback}}
-    function saveJSON(key,val){localStorage.setItem(key,JSON.stringify(val))}
+<!-- Audio -->
+<audio id="spinSound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" preload="auto"></audio>
+<audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
 
-    // Registration
-    const regForm = document.getElementById('regForm');
-    const regCountEl = document.getElementById('regCount');
-    const spotsEl = document.getElementById('spots');
-    const downloadRegs = document.getElementById('downloadRegs');
-    const bonusLink = document.getElementById('bonusLink');
+<script>
+const prizes = [
+  {text: "Rp50K", color: "#feca57", value: 50000},
+  {text: "ZONK", color: "#2c3e50", value: 0, zonk: true},
+  {text: "Rp100K", color: "#48dbfb", value: 100000},
+  {text: "Rp250K", color: "#ff9ff3", value: 250000},
+  {text: "Rp500K", color: "#1dd1a1", value: 500000},
+  {text: "Rp1JT", color: "#ffd700", value: 1000000, glow: true}
+];
 
-    let regs = loadJSON(LS_REGS, []);
-    let lb = loadJSON(LS_LB, [
-      {name:'Tim Merah',score:95},
-      {name:'Tim Biru',score:88},
-      {name:'Tim Kuning',score:82}
-    ]);
-    const MAX_SPOTS = 64;
+const wheel = document.getElementById('wheel');
+const ctx = wheel.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
+const resultDiv = document.getElementById('result');
+const uniqueCodeInput = document.getElementById('uniqueCode');
+const spinSound = document.getElementById('spinSound');
+const winSound = document.getElementById('winSound');
+let isSpinning = false;
 
-    function refreshRegs(){
-      regCountEl.textContent = regs.length;
-      const left = MAX_SPOTS - regs.length;
-      spotsEl.textContent = `Kuota tersisa: ${left}`;
-      if(left<=0){document.querySelector('#regForm button').disabled=true}
+// Gambar roda
+function drawWheel() {
+  const num = prizes.length;
+  const angle = (2 * Math.PI) / num;
+  prizes.forEach((p, i) => {
+    const start = i * angle;
+    ctx.beginPath();
+    ctx.moveTo(150, 150);
+    ctx.arc(150, 150, 140, start, start + angle);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(150, 150);
+    ctx.rotate(start + angle / 2);
+    ctx.fillStyle = p.zonk ? "#fff" : "#000";
+    ctx.font = "bold 16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(p.text, 100, 8);
+    ctx.restore();
+  });
+}
+
+// Efek confetti
+function createConfetti() {
+  for (let i = 0; i < 50; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.background = ['#f00','#0f0','#00f','#ff0','#f0f'][Math.floor(Math.random()*5)];
+    confetti.style.animationDelay = Math.random() * 2 + 's';
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 5000);
+  }
+}
+
+// Validasi kode
+uniqueCodeInput.addEventListener('input', () => {
+  const code = uniqueCodeInput.value.trim();
+  const valid = /^\d{5,6}$/.test(code) && code.endsWith('123');
+  spinBtn.disabled = !valid || isSpinning;
+  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN SEKARANG' : '<i class="fas fa-lock"></i> MASUKKAN KODE';
+});
+
+// Spin
+spinBtn.addEventListener('click', () => {
+  if (isSpinning) return;
+  isSpinning = true;
+  spinBtn.disabled = true;
+  resultDiv.innerHTML = '';
+  spinSound.play();
+
+  const code = uniqueCodeInput.value;
+
+  // KONTROL HADIAH DI SINI:
+  // Ganti angka untuk kontrol pemenang
+  // 0 = Rp50K, 1 = ZONK, 2 = Rp100K, dst.
+  let forcedIndex = 1; // UBAH INI: 1 = ZONK (100% ZONK jika semua kode pakai ini)
+
+  // Contoh kontrol per kode:
+  // const winners = { "20123": 5, "25123": 0 };
+  // forcedIndex = winners[code] ?? 1;
+
+  const spins = 8 + forcedIndex;
+  const degrees = spins * 360 + Math.random() * 360;
+  wheel.style.transform = `rotate(${degrees}deg)`;
+
+  setTimeout(() => {
+    spinSound.pause();
+    spinSound.currentTime = 0;
+    const prize = prizes[forcedIndex];
+
+    if (prize.zonk) {
+      resultDiv.innerHTML = `<div class="text-danger fs-4 zonk">ZONK! 😢</div><small>Coba lagi besok ya!</small>`;
+    } else {
+      winSound.play();
+      createConfetti();
+      resultDiv.innerHTML = `
+        <div class="text-success fs-3 jackpot-glow">JACKPOT! 🎰</div>
+        <div class="text-warning fs-2 fw-bold">Kamu Dapat ${prize.text}</div>
+        <small class="text-success">Saldo masuk otomatis dalam 1 menit</small>
+      `;
     }
 
-    function toCSV(rows){
-      if(!rows.length) return '';
-      const keys = Object.keys(rows[0]);
-      const lines = [keys.join(',')];
-      for(const r of rows){
-        lines.push(keys.map(k=>`"${(r[k]||'').toString().replace(/"/g,'""')}"`).join(','));
-      }
-      return lines.join('\n');
-    }
+    isSpinning = false;
+    spinBtn.disabled = false;
+    spinBtn.innerHTML = '<i class="fas fa-redo"></i> SPIN LAGI?';
+  }, 4800);
+});
 
-    regForm.addEventListener('submit', e=>{
-      e.preventDefault();
-      const name = document.getElementById('r_name').value.trim();
-      const wa = document.getElementById('r_wa').value.trim();
-      const email = document.getElementById('r_email').value.trim();
-      const city = document.getElementById('r_city').value.trim();
-      const agree = document.getElementById('r_agree').checked;
-      if(!agree){alert('Kamu harus menyetujui syarat & ketentuan (18+)');return}
-      const entry = {name,wa,email,city,ts:new Date().toISOString()};
-      regs.push(entry); saveJSON(LS_REGS, regs); refreshRegs();
-      // show a thank you toast
-      alert('Pendaftaran diterima! Cek WhatsApp/Email untuk konfirmasi.');
-      regForm.reset();
-      // optionally: open bonus link if they agreed to promos
-    });
+drawWheel();
+</script>
 
-    downloadRegs.addEventListener('click', ()=>{
-      const csv = toCSV(regs);
-      if(!csv) return alert('Belum ada pendaftar.');
-      const blob = new Blob([csv],{type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'pendaftaran_padel.csv'; a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    // Leaderboard handling
-    const lbTableBody = document.querySelector('#leaderboardTable tbody');
-    function renderLB(){
-      lb.sort((a,b)=>b.score-a.score);
-      lbTableBody.innerHTML='';
-      lb.slice(0,50).forEach((row,i)=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="rank">${i+1}</td><td><div class="name">${escapeHtml(row.name)}</div></td><td>${row.score}</td>`;
-        lbTableBody.appendChild(tr);
-      });
-      saveJSON(LS_LB, lb);
-    }
-    function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-    document.getElementById('adminAdd').addEventListener('click', ()=>{
-      const name = document.getElementById('adminName').value.trim();
-      const score = Number(document.getElementById('adminScore').value.trim()||0);
-      if(!name) return alert('Isi nama tim');
-      lb.push({name,score}); renderLB(); document.getElementById('adminName').value=''; document.getElementById('adminScore').value='';
-    });
-
-    document.getElementById('exportLeaderboard').addEventListener('click', ()=>{
-      const csv = toCSV(lb.map(r=>({name:r.name,score:r.score}))); if(!csv) return alert('Leaderboard kosong');
-      const blob = new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url;a.download='leaderboard.csv'; a.click(); URL.revokeObjectURL(url);
-    });
-    document.getElementById('resetLeaderboard').addEventListener('click', ()=>{if(confirm('Reset leaderboard?')){lb=[];renderLB();}}
-    );
-
-    // Gallery lightbox
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    document.getElementById('closeModal').addEventListener('click', ()=>{modal.style.display='none'});
-    document.querySelectorAll('#gallery img').forEach(img=>{
-      img.addEventListener('click', ()=>{
-        modal.style.display='flex'; modalImg.src = img.dataset.full || img.src;
-      });
-    });
-
-    // Spots & initial render
-    refreshRegs(); renderLB();
-
-    // Bonus link default (ganti ke domain kamu)
-    bonusLink.href = 'https://contohbonuslink.com';
-
-    // Simple auto-sample data (for demo) - remove in production
-    if(lb.length===0){lb=[{name:'Tim Merah',score:95},{name:'Tim Biru',score:88}];saveJSON(LS_LB,lb);} renderLB();
-
-    // Small helper: clear local storage button via console: localStorage.removeItem('padel_regs_v1')
-  </script>
 </body>
 </html>
