@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KisahSlot - Lucky Spin USER ID</title>
+  <title>KisahSlot - Lucky Spin [FIXED]</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
@@ -41,8 +41,6 @@
       text-align: center;
       margin-bottom: 8px;
       animation: pulse 2s infinite;
-      position: relative;
-      z-index: 10;
     }
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
@@ -103,11 +101,7 @@
       margin: 35px auto;
       border-radius: 50%;
       background: radial-gradient(circle, #111 50%, #000 100%);
-      box-shadow: 
-        0 0 50px #ff0, 
-        0 0 80px #ff0, 
-        0 0 120px rgba(255, 215, 0, 0.6),
-        inset 0 0 40px rgba(0,0,0,0.9);
+      box-shadow: 0 0 50px #ff0, 0 0 80px #ff0, 0 0 120px rgba(255, 215, 0, 0.6), inset 0 0 40px rgba(0,0,0,0.9);
       padding: 16px;
       border: 4px solid #ffd700;
     }
@@ -116,6 +110,7 @@
       height: 100%;
       border-radius: 50%;
       transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      transform: rotate(0deg);
     }
     .pointer {
       position: absolute;
@@ -157,7 +152,6 @@
       background: #444;
       color: #888;
       cursor: not-allowed;
-      transform: none;
     }
     #result {
       min-height: 80px;
@@ -175,14 +169,8 @@
       font-size: 2rem !important;
     }
     @keyframes jackpot {
-      from { 
-        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0; 
-        transform: scale(1);
-      }
-      to { 
-        text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ff0, 0 0 100px #ffd700; 
-        transform: scale(1.05);
-      }
+      from { text-shadow: 0 0 15px #fff, 0 0 30px #ff0; transform: scale(1); }
+      to { text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ffd700; transform: scale(1.05); }
     }
     .confetti {
       position: fixed;
@@ -194,10 +182,7 @@
       animation: fall 3.5s linear infinite;
     }
     @keyframes fall {
-      to { 
-        transform: translateY(110vh) rotate(1080deg) scale(0.5); 
-        opacity: 0; 
-      }
+      to { transform: translateY(110vh) rotate(1080deg) scale(0.5); opacity: 0; }
     }
   </style>
 </head>
@@ -218,7 +203,6 @@
   <div id="result"></div>
 </div>
 
-<!-- Audio -->
 <audio id="spinSound" preload="auto">
   <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
 </audio>
@@ -245,7 +229,7 @@ const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
 let isSpinning = false;
 
-// Cek sudah spin belum
+// Cek sudah spin
 if (localStorage.getItem('hasSpun') === 'true') {
   userIdInput.disabled = true;
   spinBtn.disabled = true;
@@ -253,7 +237,6 @@ if (localStorage.getItem('hasSpun') === 'true') {
   resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
 }
 
-// Gambar roda
 function drawWheel() {
   const num = prizes.length;
   const angle = (2 * Math.PI) / num;
@@ -280,7 +263,6 @@ function drawWheel() {
   });
 }
 
-// Confetti
 function createConfetti() {
   for (let i = 0; i < 120; i++) {
     const c = document.createElement('div');
@@ -296,7 +278,7 @@ function createConfetti() {
   }
 }
 
-// Validasi USER ID (min 4 karakter, hanya huruf/angka)
+// Validasi USER ID
 userIdInput.addEventListener('input', () => {
   const uid = userIdInput.value.trim();
   const valid = /^[a-zA-Z0-9]{4,20}$/.test(uid);
@@ -304,27 +286,34 @@ userIdInput.addEventListener('input', () => {
   spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
-// Spin
+// === SPIN FIX 100% ===
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
+
+  // 1. PILIH HADIAH DULU
+  const winnerIndex = Math.floor(Math.random() * prizes.length);
+  const prize = prizes[winnerIndex];
+
+  // 2. HITUNG SUDUT AKHIR (pointer di atas = 0°)
+  const segmentAngle = 360 / prizes.length;
+  const targetAngle = winnerIndex * segmentAngle + (segmentAngle / 2); // tengah segmen
+  const spins = 8; // putaran penuh
+  const finalAngle = spins * 360 + targetAngle;
+
+  // 3. ANIMASI
   isSpinning = true;
   spinBtn.disabled = true;
   resultDiv.innerHTML = '';
   spinSound.play().catch(() => {});
 
-  const randomIndex = Math.floor(Math.random() * prizes.length);
-  const spins = 8 + randomIndex;
-  const degrees = spins * 360 + Math.random() * 360;
-  wheel.style.transform = `rotate(${degrees}deg)`;
+  wheel.style.transform = `rotate(${finalAngle}deg)`;
 
   setTimeout(() => {
     spinSound.pause();
     winSound.play().catch(() => {});
     createConfetti();
 
-    const prize = prizes[randomIndex];
     const userId = userIdInput.value.trim().toUpperCase();
-    
     resultDiv.innerHTML = `
       <div class="text-success jackpot-glow">SELAMAT ${userId}!</div>
       <div class="text-warning fs-1 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
