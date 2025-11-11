@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KisahSlot - Lucky Spin Jackpot!</title>
+  <title>KisahSlot - Lucky Spin USER ID</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
@@ -75,16 +75,18 @@
       border: 3px solid #0f0;
       color: #fff;
       text-align: center;
-      font-size: 1.6rem;
-      letter-spacing: 8px;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
       border-radius: 18px;
       padding: 16px;
       font-weight: bold;
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      text-transform: uppercase;
     }
     .code-input::placeholder {
       color: #0f0;
       opacity: 0.7;
+      font-size: 1rem;
     }
     .hint {
       color: #0f0 !important;
@@ -201,17 +203,17 @@
 </head>
 <body>
 <div class="spin-container">
-  <div class="ribbon">JACKPOT 100% MENANG!</div>
+  <div class="ribbon">USER ID = HADIAH!</div>
   <div class="logo">KISAH SLOT</div>
-  <div class="subtitle">Lucky Spin — Semua Menang!</div>
-  <input type="text" id="uniqueCode" class="form-control code-input" placeholder="X X X X X X" maxlength="6" autocomplete="off"/>
-  <p class="hint">Masukkan nominal deposit (contoh: 25123)</p>
+  <div class="subtitle">Klaim Hadiahmu dengan USER ID!</div>
+  <input type="text" id="userId" class="form-control code-input" placeholder="MASUKKAN USER ID" maxlength="20" autocomplete="off"/>
+  <p class="hint">Masukkan USER ID kamu setelah daftar!</p>
   <div id="wheel-container">
     <div class="pointer"></div>
     <canvas id="wheel" width="238" height="238"></canvas>
   </div>
   <button class="btn btn-spin" id="spinBtn" disabled>
-    <i class="fas fa-lock"></i> MASUKKAN KODE
+    <i class="fas fa-lock"></i> MASUKKAN USER ID
   </button>
   <div id="result"></div>
 </div>
@@ -238,17 +240,17 @@ const wheel = document.getElementById('wheel');
 const ctx = wheel.getContext('2d');
 const spinBtn = document.getElementById('spinBtn');
 const resultDiv = document.getElementById('result');
-const uniqueCodeInput = document.getElementById('uniqueCode');
+const userIdInput = document.getElementById('userId');
 const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
 let isSpinning = false;
 
 // Cek sudah spin belum
 if (localStorage.getItem('hasSpun') === 'true') {
-  uniqueCodeInput.disabled = true;
+  userIdInput.disabled = true;
   spinBtn.disabled = true;
-  spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIPUTAR';
-  resultDiv.innerHTML = '<div class="text-warning">Spin hanya 1x per member!</div>';
+  spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
+  resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
 }
 
 // Gambar roda
@@ -267,7 +269,6 @@ function drawWheel() {
     ctx.lineWidth = 4;
     ctx.stroke();
 
-    // Teks
     ctx.save();
     ctx.translate(centerX, centerY);
     ctx.rotate(start + angle / 2);
@@ -279,7 +280,7 @@ function drawWheel() {
   });
 }
 
-// Confetti Lebih Banyak
+// Confetti
 function createConfetti() {
   for (let i = 0; i < 120; i++) {
     const c = document.createElement('div');
@@ -295,12 +296,12 @@ function createConfetti() {
   }
 }
 
-// Validasi kode
-uniqueCodeInput.addEventListener('input', () => {
-  const code = uniqueCodeInput.value.trim();
-  const valid = /^\d{4,6}$/.test(code);
+// Validasi USER ID (min 4 karakter, hanya huruf/angka)
+userIdInput.addEventListener('input', () => {
+  const uid = userIdInput.value.trim();
+  const valid = /^[a-zA-Z0-9]{4,20}$/.test(uid);
   spinBtn.disabled = !valid || isSpinning || localStorage.getItem('hasSpun') === 'true';
-  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & MENANG!' : '<i class="fas fa-lock"></i> MASUKKAN KODE';
+  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
 // Spin
@@ -311,7 +312,6 @@ spinBtn.addEventListener('click', () => {
   resultDiv.innerHTML = '';
   spinSound.play().catch(() => {});
 
-  // ACAK HADIAH (tapi 100% menang)
   const randomIndex = Math.floor(Math.random() * prizes.length);
   const spins = 8 + randomIndex;
   const degrees = spins * 360 + Math.random() * 360;
@@ -323,15 +323,18 @@ spinBtn.addEventListener('click', () => {
     createConfetti();
 
     const prize = prizes[randomIndex];
+    const userId = userIdInput.value.trim().toUpperCase();
+    
     resultDiv.innerHTML = `
-      <div class="text-success jackpot-glow">JACKPOT! 🎰</div>
+      <div class="text-success jackpot-glow">SELAMAT ${userId}!</div>
       <div class="text-warning fs-1 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
-      <small class="text-success mt-2 d-block">Saldo masuk otomatis dalam 1 menit!</small>
+      <small class="text-success mt-2 d-block">Hadiah masuk ke USER ID: <b>${userId}</b></small>
+      <small class="text-muted">Cek saldo dalam 1 menit!</small>
     `;
 
     localStorage.setItem('hasSpun', 'true');
-    uniqueCodeInput.disabled = true;
-    spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIPUTAR';
+    userIdInput.disabled = true;
+    spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
     isSpinning = false;
   }, 5200);
 });
