@@ -2,30 +2,37 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>KisahSlot - Lucky Spin USER ID</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto; /* Pastikan bisa scroll */
+      -webkit-overflow-scrolling: touch; /* Smooth scroll di iOS */
+      touch-action: manipulation;
+    }
     body {
       background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
       color: #fff;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       padding: 15px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      display: block; /* Ubah dari flex agar bisa scroll */
     }
     .spin-container {
       width: 100%;
       max-width: 390px;
+      margin: 20px auto; /* Pusatkan & beri jarak dari atas */
       background: rgba(17, 17, 17, 0.95);
       border-radius: 32px;
-      padding: 32px 22px;
+      padding: 28px 20px;
       box-shadow: 0 0 40px rgba(0, 255, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.4);
       position: relative;
       overflow: hidden;
@@ -33,7 +40,7 @@
       backdrop-filter: blur(10px);
     }
     .logo {
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       font-weight: 700;
       background: linear-gradient(45deg, #ffd700, #ff6b6b, #f9ca24);
       -webkit-background-clip: text;
@@ -41,8 +48,6 @@
       text-align: center;
       margin-bottom: 8px;
       animation: pulse 2s infinite;
-      position: relative;
-      z-index: 10;
     }
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
@@ -52,7 +57,7 @@
       color: #0f0;
       font-size: 1.1rem;
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       font-weight: 600;
       text-shadow: 0 0 10px #0f0;
     }
@@ -75,10 +80,10 @@
       border: 3px solid #0f0;
       color: #fff;
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       letter-spacing: 3px;
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px;
       font-weight: bold;
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
       text-transform: uppercase;
@@ -86,29 +91,29 @@
     .code-input::placeholder {
       color: #0f0;
       opacity: 0.7;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
     .hint {
       color: #0f0 !important;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       text-align: center;
-      margin-top: 12px;
+      margin-top: 10px;
       font-weight: 500;
       text-shadow: 0 0 8px #0f0;
     }
     #wheel-container {
       position: relative;
-      width: 270px;
-      height: 270px;
-      margin: 35px auto;
+      width: 240px;
+      height: 240px;
+      margin: 30px auto;
       border-radius: 50%;
       background: radial-gradient(circle, #111 50%, #000 100%);
-      box-shadow: 
-        0 0 50px #ff0, 
-        0 0 80px #ff0, 
+      box-shadow:
+        0 0 50px #ff0,
+        0 0 80px #ff0,
         0 0 120px rgba(255, 215, 0, 0.6),
         inset 0 0 40px rgba(0,0,0,0.9);
-      padding: 16px;
+      padding: 14px;
       border: 4px solid #ffd700;
     }
     #wheel {
@@ -123,9 +128,9 @@
       left: 50%;
       transform: translateX(-50%);
       width: 0; height: 0;
-      border-left: 24px solid transparent;
-      border-right: 24px solid transparent;
-      border-top: 48px solid #f1c40f;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-top: 44px solid #f1c40f;
       filter: drop-shadow(0 6px 12px #000);
       z-index: 10;
       animation: bounce 1.5s infinite;
@@ -139,11 +144,11 @@
       border: none;
       color: #000;
       font-weight: bold;
-      font-size: 1.2rem;
-      padding: 18px;
+      font-size: 1.1rem;
+      padding: 16px;
       border-radius: 50px;
       width: 100%;
-      margin-top: 22px;
+      margin-top: 20px;
       box-shadow: 0 10px 30px rgba(255,107,107,0.7);
       transition: all 0.3s;
       text-transform: uppercase;
@@ -161,9 +166,9 @@
     }
     #result {
       min-height: 80px;
-      padding: 20px;
+      padding: 18px;
       border-radius: 20px;
-      margin-top: 22px;
+      margin-top: 20px;
       background: rgba(0,0,0,0.85);
       font-weight: bold;
       text-align: center;
@@ -172,21 +177,21 @@
     }
     .jackpot-glow {
       animation: jackpot 1.8s infinite alternate;
-      font-size: 2rem !important;
+      font-size: 1.8rem !important;
     }
     @keyframes jackpot {
-      from { 
-        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0; 
+      from {
+        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0;
         transform: scale(1);
       }
-      to { 
-        text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ff0, 0 0 100px #ffd700; 
+      to {
+        text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ff0, 0 0 100px #ffd700;
         transform: scale(1.05);
       }
     }
     .confetti {
       position: fixed;
-      width: 12px; height: 12px;
+      width: 10px; height: 10px;
       background: #f00;
       top: -15px;
       z-index: 1000;
@@ -194,10 +199,21 @@
       animation: fall 3.5s linear infinite;
     }
     @keyframes fall {
-      to { 
-        transform: translateY(110vh) rotate(1080deg) scale(0.5); 
-        opacity: 0; 
+      to {
+        transform: translateY(110vh) rotate(1080deg) scale(0.5);
+        opacity: 0;
       }
+    }
+
+    /* Responsif untuk layar kecil */
+    @media (max-width: 400px) {
+      .spin-container { padding: 24px 16px; }
+      #wheel-container { width: 210px; height: 210px; margin: 25px auto; }
+      .logo { font-size: 2rem; }
+      .subtitle { font-size: 1rem; }
+      .code-input { font-size: 1.3rem; padding: 12px; }
+      .btn-spin { font-size: 1rem; padding: 14px; }
+      .pointer { border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 40px solid #f1c40f; }
     }
   </style>
 </head>
@@ -210,7 +226,7 @@
   <p class="hint">Masukkan USER ID kamu setelah daftar!</p>
   <div id="wheel-container">
     <div class="pointer"></div>
-    <canvas id="wheel" width="238" height="238"></canvas>
+    <canvas id="wheel" width="212" height="212"></canvas>
   </div>
   <button class="btn btn-spin" id="spinBtn" disabled>
     <i class="fas fa-lock"></i> MASUKKAN USER ID
@@ -235,7 +251,6 @@ const prizes = [
   {text: "Rp500K", color: "#ff7675"},
   {text: "Rp1JT", color: "#ffd700", glow: true}
 ];
-
 const wheel = document.getElementById('wheel');
 const ctx = wheel.getContext('2d');
 const spinBtn = document.getElementById('spinBtn');
@@ -245,7 +260,6 @@ const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
 let isSpinning = false;
 
-// Cek sudah spin belum
 if (localStorage.getItem('hasSpun') === 'true') {
   userIdInput.disabled = true;
   spinBtn.disabled = true;
@@ -253,11 +267,10 @@ if (localStorage.getItem('hasSpun') === 'true') {
   resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
 }
 
-// Gambar roda
 function drawWheel() {
   const num = prizes.length;
   const angle = (2 * Math.PI) / num;
-  const centerX = 119, centerY = 119, radius = 108;
+  const centerX = wheel.width / 2, centerY = wheel.height / 2, radius = centerX - 10;
   prizes.forEach((p, i) => {
     const start = i * angle;
     ctx.beginPath();
@@ -266,23 +279,21 @@ function drawWheel() {
     ctx.fillStyle = p.color;
     ctx.fill();
     ctx.strokeStyle = "#000";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
     ctx.stroke();
-
     ctx.save();
     ctx.translate(centerX, centerY);
     ctx.rotate(start + angle / 2);
     ctx.fillStyle = p.glow ? "#000" : "#fff";
-    ctx.font = "bold 17px Arial";
+    ctx.font = "bold 15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(p.text, 72, 7);
+    ctx.fillText(p.text, radius * 0.65, 5);
     ctx.restore();
   });
 }
 
-// Confetti
 function createConfetti() {
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 100; i++) {
     const c = document.createElement('div');
     c.className = 'confetti';
     c.style.left = Math.random() * 100 + 'vw';
@@ -296,7 +307,6 @@ function createConfetti() {
   }
 }
 
-// Validasi USER ID (min 4 karakter, hanya huruf/angka)
 userIdInput.addEventListener('input', () => {
   const uid = userIdInput.value.trim();
   const valid = /^[a-zA-Z0-9]{4,20}$/.test(uid);
@@ -304,34 +314,29 @@ userIdInput.addEventListener('input', () => {
   spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
-// Spin
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
   isSpinning = true;
   spinBtn.disabled = true;
   resultDiv.innerHTML = '';
   spinSound.play().catch(() => {});
-
   const randomIndex = Math.floor(Math.random() * prizes.length);
   const spins = 8 + randomIndex;
   const degrees = spins * 360 + Math.random() * 360;
   wheel.style.transform = `rotate(${degrees}deg)`;
-
   setTimeout(() => {
     spinSound.pause();
     winSound.play().catch(() => {});
     createConfetti();
-
     const prize = prizes[randomIndex];
     const userId = userIdInput.value.trim().toUpperCase();
-    
+   
     resultDiv.innerHTML = `
       <div class="text-success jackpot-glow">SELAMAT ${userId}!</div>
-      <div class="text-warning fs-1 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
+      <div class="text-warning fs-2 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
       <small class="text-success mt-2 d-block">Hadiah masuk ke USER ID: <b>${userId}</b></small>
       <small class="text-muted">Cek saldo dalam 1 menit!</small>
     `;
-
     localStorage.setItem('hasSpun', 'true');
     userIdInput.disabled = true;
     spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
