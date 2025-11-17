@@ -14,8 +14,8 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      overflow-y: auto; /* Pastikan bisa scroll */
-      -webkit-overflow-scrolling: touch; /* Smooth scroll di iOS */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       touch-action: manipulation;
     }
     body {
@@ -24,12 +24,12 @@
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       padding: 15px 10px;
-      display: block; /* Ubah dari flex agar bisa scroll */
+      display: block;
     }
     .spin-container {
       width: 100%;
       max-width: 390px;
-      margin: 20px auto; /* Pusatkan & beri jarak dari atas */
+      margin: 20px auto;
       background: rgba(17, 17, 17, 0.95);
       border-radius: 32px;
       padding: 28px 20px;
@@ -121,6 +121,7 @@
       height: 100%;
       border-radius: 50%;
       transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      transform-origin: center;
     }
     .pointer {
       position: absolute;
@@ -204,8 +205,6 @@
         opacity: 0;
       }
     }
-
-    /* Responsif untuk layar kecil */
     @media (max-width: 400px) {
       .spin-container { padding: 24px 16px; }
       #wheel-container { width: 210px; height: 210px; margin: 25px auto; }
@@ -243,23 +242,29 @@
 </audio>
 
 <script>
+/* ===== CONFIGURASI HADIAH ===== */
 const prizes = [
-  {text: "Rp25K", color: "#a29bfe"},
-  {text: "Rp50K", color: "#74b9ff"},
-  {text: "Rp100K", color: "#81ecec"},
-  {text: "Rp200K", color: "#fab1a0"},
-  {text: "Rp500K", color: "#ff7675"},
-  {text: "Rp1JT", color: "#ffd700", glow: true}
+  { text: "Rp25K",  color: "#a29bfe" },
+  { text: "Rp50K",  color: "#74b9ff" },
+  { text: "Rp100K", color: "#81ecec" },
+  { text: "Rp200K", color: "#fab1a0" },
+  { text: "Rp500K", color: "#ff7675" },
+  { text: "Rp1JT",  color: "#ffd700", glow: true }
 ];
-const wheel = document.getElementById('wheel');
-const ctx = wheel.getContext('2d');
+
+/* ===== DOM ELEMENTS ===== */
+const wheelCanvas = document.getElementById('wheel');
+const ctx = wheelCanvas.getContext('2d');
 const spinBtn = document.getElementById('spinBtn');
 const resultDiv = document.getElementById('result');
 const userIdInput = document.getElementById('userId');
 const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
-let isSpinning = false;
 
+let isSpinning = false;
+let currentRotation = 0; // Track total rotation
+
+/* ===== CEK SUDAH SPIN (1x per device) ===== */
 if (localStorage.getItem('hasSpun') === 'true') {
   userIdInput.disabled = true;
   spinBtn.disabled = true;
@@ -267,83 +272,127 @@ if (localStorage.getItem('hasSpun') === 'true') {
   resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
 }
 
+/* ===== GAMBAR WHEEL ===== */
 function drawWheel() {
   const num = prizes.length;
-  const angle = (2 * Math.PI) / num;
-  const centerX = wheel.width / 2, centerY = wheel.height / 2, radius = centerX - 10;
-  prizes.forEach((p, i) => {
-    const start = i * angle;
+  const anglePerSegment = (2 * Math.PI) / num;
+  const centerX = wheelCanvas.width / 2;
+  const centerY = wheelCanvas.height / 2;
+  const radius = centerX - 10;
+
+  ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+
+  prizes.forEach((prize, i) => {
+    const startAngle = i * anglePerSegment;
+    const endAngle = startAngle + anglePerSegment;
+
+    // Fill segment
     ctx.beginPath();
     ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, start, start + angle);
-    ctx.fillStyle = p.color;
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+    ctx.fillStyle = prize.color;
     ctx.fill();
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 3;
     ctx.stroke();
+
+    // Text di tengah segment
     ctx.save();
     ctx.translate(centerX, centerY);
-    ctx.rotate(start + angle / 2);
-    ctx.fillStyle = p.glow ? "#000" : "#fff";
+    ctx.rotate(startAngle + anglePerSegment / 2);
+    ctx.fillStyle = prize.glow ? "#000" : "#fff";
     ctx.font = "bold 15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(p.text, radius * 0.65, 5);
+    ctx.fillText(prize.text, radius * 0.65, 5);
     ctx.restore();
   });
 }
 
+/* ===== CONFETTI EFFECT ===== */
 function createConfetti() {
-  for (let i = 0; i < 100; i++) {
+  const colors = ['#ffd700', '#ff6b6b', '#00ff00', '#00ffff', '#ff00ff', '#ffffff'];
+  for (let i = 0; i < 120; i++) {
     const c = document.createElement('div');
     c.className = 'confetti';
     c.style.left = Math.random() * 100 + 'vw';
-    const colors = ['#ffd700','#ff6b6b','#00ff00','#00ffff','#ff00ff','#ffffff'];
-    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
     c.style.animationDelay = Math.random() * 2 + 's';
     c.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
-    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 6000);
   }
 }
 
+/* ===== VALIDASI USER ID ===== */
 userIdInput.addEventListener('input', () => {
   const uid = userIdInput.value.trim();
   const valid = /^[a-zA-Z0-9]{4,20}$/.test(uid);
   spinBtn.disabled = !valid || isSpinning || localStorage.getItem('hasSpun') === 'true';
-  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
+  spinBtn.innerHTML = valid 
+    ? '<i class="fas fa-play"></i> SPIN & KLAIM!' 
+    : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
+/* ===== SPIN LOGIC – 100% AKURAT & SINHRON ===== */
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
+
   isSpinning = true;
   spinBtn.disabled = true;
   resultDiv.innerHTML = '';
+  spinSound.currentTime = 0;
   spinSound.play().catch(() => {});
+
+  // 1. PILIH HADIAH DULU (RANDOM)
   const randomIndex = Math.floor(Math.random() * prizes.length);
-  const spins = 8 + randomIndex;
-  const degrees = spins * 360 + Math.random() * 360;
-  wheel.style.transform = `rotate(${degrees}deg)`;
+  const selectedPrize = prizes[randomIndex];
+
+  // 2. HITUNG ANGLE TEPAT (TENGAH SEGMENT)
+  const numSegments = prizes.length;
+  const anglePerSegment = 360 / numSegments;
+  const segmentCenterOffset = anglePerSegment / 2;
+  const targetAngle = (randomIndex * anglePerSegment) + segmentCenterOffset;
+
+  // 3. TAMBAH FULL SPIN (5-8 PUTARAN)
+  const minSpins = 5;
+  const maxSpins = 8;
+  const extraSpins = (minSpins + Math.random() * (maxSpins - minSpins)) * 360;
+
+  // 4. TOTAL ROTASI (clockwise, pointer di 0 derajat)
+  const totalRotation = currentRotation + extraSpins + (360 - targetAngle);
+  
+  // 5. ANIMASI CSS
+  wheelCanvas.style.transition = 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+  wheelCanvas.style.transform = `rotate(${totalRotation}deg)`;
+  currentRotation = totalRotation % 360; // Simpan sisa rotasi
+
+  // 6. SETELAH ANIMASI SELESAI → TAMPILKAN HASIL
+  const spinDuration = 5200;
   setTimeout(() => {
     spinSound.pause();
+    winSound.currentTime = 0;
     winSound.play().catch(() => {});
     createConfetti();
-    const prize = prizes[randomIndex];
+
     const userId = userIdInput.value.trim().toUpperCase();
-   
+
     resultDiv.innerHTML = `
       <div class="text-success jackpot-glow">SELAMAT ${userId}!</div>
-      <div class="text-warning fs-2 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
+      <div class="text-warning fs-2 fw-bold mt-2">Kamu Dapat ${selectedPrize.text}</div>
       <small class="text-success mt-2 d-block">Hadiah masuk ke USER ID: <b>${userId}</b></small>
       <small class="text-muted">Cek saldo dalam 1 menit!</small>
     `;
+
+    // Simpan status spin
     localStorage.setItem('hasSpun', 'true');
     userIdInput.disabled = true;
     spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
     isSpinning = false;
-  }, 5200);
+  }, spinDuration);
 });
 
+/* ===== INIT ===== */
 drawWheel();
 </script>
 </body>
