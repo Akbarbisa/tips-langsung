@@ -136,7 +136,207 @@
       animation: bounce 1.5s infinite;
     }
     @keyframes bounce {
-...
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-8px); }
+    }
+    .btn-spin {
+      background: linear-gradient(45deg, #ff6b6b, #f9ca24, #ffd700);
+      border: none;
+      color: #000;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 16px;
+      border-radius: 50px;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(255,107,107,0.7);
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-spin:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255,107,107,0.9);
+    }
+    .btn-spin:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+      transform: none;
+    }
+    #result {
+      min-height: 80px;
+      padding: 18px;
+      border-radius: 20px;
+      margin-top: 20px;
+      background: rgba(0,0,0,0.85);
+      font-weight: bold;
+      text-align: center;
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+    .jackpot-glow {
+      animation: jackpot 1.8s infinite alternate;
+      font-size: 1.8rem !important;
+    }
+    @keyframes jackpot {
+      from {
+        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0;
+        transform: scale(1);
+      }
+      to {
+        text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ff0, 0 0 100px #ffd700;
+        transform: scale(1.05);
+      }
+    }
+    .confetti {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: #f00;
+      top: -15px;
+      z-index: 1000;
+      border-radius: 50% 0;
+      animation: fall 3.5s linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(1080deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 400px) {
+      .spin-container { padding: 24px 16px; }
+      #wheel-container { width: 210px; height: 210px; margin: 25px auto; }
+      .logo { font-size: 2rem; }
+      .subtitle { font-size: 1rem; }
+      .code-input { font-size: 1.3rem; padding: 12px; }
+      .btn-spin { font-size: 1rem; padding: 14px; }
+      .pointer { border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 40px solid #f1c40f; }
+    }
+  </style>
+</head>
+<body>
+<div class="spin-container">
+  <div class="ribbon">USER ID = HADIAH!</div>
+  <div class="logo">KISAH SLOT</div>
+  <div class="subtitle">Klaim Hadiahmu dengan USER ID!</div>
+  <input type="text" id="userId" class="form-control code-input" placeholder="MASUKKAN USER ID" maxlength="20" autocomplete="off"/>
+  <p class="hint">Masukkan USER ID kamu setelah daftar!</p>
+  <div id="wheel-container">
+    <div class="pointer"></div>
+    <canvas id="wheel" width="212" height="212"></canvas>
+  </div>
+  <button class="btn btn-spin" id="spinBtn" disabled>
+    <i class="fas fa-lock"></i> MASUKKAN USER ID
+  </button>
+  <div id="result"></div>
+</div>
+<audio id="spinSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+</audio>
+<audio id="winSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+</audio>
+<script>
+const prizes = [
+  {text: "Rp25K", color: "#a29bfe"},
+  {text: "Rp50K", color: "#74b9ff"},
+  {text: "Rp100K", color: "#81ecec"},
+  {text: "Rp200K", color: "#fab1a0"},
+  {text: "Rp500K", color: "#ff7675"},
+  {text: "Rp1JT", color: "#ffd700", glow: true}
+];
+
+const wheel = document.getElementById('wheel');
+const ctx = wheel.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
+const resultDiv = document.getElementById('result');
+const userIdInput = document.getElementById('userId');
+const spinSound = document.getElementById('spinSound');
+const winSound = document.getElementById('winSound');
+
+let isSpinning = false;
+let currentRotation = 0;
+
+if (localStorage.getItem('hasSpun') === 'true') {
+  userIdInput.disabled = true;
+  spinBtn.disabled = true;
+  spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
+  resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
+}
+
+function drawWheel() {
+  const numPrizes = prizes.length;
+  const segmentAngle = (2 * Math.PI) / numPrizes;
+  const centerX = wheel.width / 2;
+  const centerY = wheel.height / 2;
+  const radius = centerX - 10;
+  const rotationOffset = -Math.PI / 2 - segmentAngle / 2;
+
+  prizes.forEach((prize, i) => {
+    const startAngle = rotationOffset + i * segmentAngle;
+    const endAngle = startAngle + segmentAngle;
+
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+    ctx.fillStyle = prize.color;
+    ctx.fill();
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(startAngle + segmentAngle / 2);
+    ctx.fillStyle = prize.glow ? "#000" : "#fff";
+    ctx.font = "bold 15px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(prize.text, radius * 0.65, 5);
+    ctx.restore();
+  });
+}
+
+function createConfetti() {
+  for (let i = 0; i < 100; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    const colors = ['#ffd700','#ff6b6b','#00ff00','#00ffff','#ff00ff','#ffffff'];
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay = Math.random() * 2 + 's';
+    c.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 6000);
+  }
+}
+
+function calculateWinningRotation(winningIndex) {
+  const numPrizes = prizes.length;
+  const segmentAngle = 360 / numPrizes;
+  
+  const currentAngle = currentRotation % 360;
+  
+  const targetAngle = 360 - (winningIndex * segmentAngle);
+  
+  let deltaRotation = (targetAngle - currentAngle) % 360;
+  if (deltaRotation < 0) deltaRotation += 360;
+  
+  const fullSpins = 5 + Math.floor(Math.random() * 3);
+  
+  const totalRotation = (fullSpins * 360) + deltaRotation;
+  
+  return totalRotation;
+}
+
+userIdInput.addEventListener('input', () => {
+  const uid = userIdInput.value.trim();
+  const valid = /^[a-zA-Z0-9]{4,20}$/.test(uid);
+  spinBtn.disabled = !valid || isSpinning || localStorage.getItem('hasSpun') === 'true';
+  spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
+});
+
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
   
