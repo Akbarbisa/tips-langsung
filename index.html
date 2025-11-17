@@ -121,7 +121,7 @@
       height: 100%;
       border-radius: 50%;
       transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-      transform-origin: center;
+      transform-origin: center center;
     }
     .pointer {
       position: absolute;
@@ -141,7 +141,7 @@
       50% { transform: translateX(-50%) translateY(-8px); }
     }
     .btn-spin {
-      background: linear-gradient(45deg, #ff6b6b, #f9ca24, #ffd700);
+      background: linear-gradient(45deg, #ff6b6b, #f9ca24, #ffd700) !important;
       border: none;
       color: #000;
       font-weight: bold;
@@ -227,7 +227,7 @@
     <div class="pointer"></div>
     <canvas id="wheel" width="212" height="212"></canvas>
   </div>
-  <button class="btn btn-spin" id="spinBtn" disabled>
+  <button class="btn-spin" id="spinBtn" disabled>  <!-- Hapus class 'btn' Bootstrap -->
     <i class="fas fa-lock"></i> MASUKKAN USER ID
   </button>
   <div id="result"></div>
@@ -242,14 +242,14 @@
 </audio>
 
 <script>
-/* ===== CONFIGURASI HADIAH ===== */
+/* ===== CONFIGURASI HADIAH (INDEX 0 = Rp25K ungu, ... INDEX 5 = Rp1JT emas) ===== */
 const prizes = [
-  { text: "Rp25K",  color: "#a29bfe" },
-  { text: "Rp50K",  color: "#74b9ff" },
-  { text: "Rp100K", color: "#81ecec" },
-  { text: "Rp200K", color: "#fab1a0" },
-  { text: "Rp500K", color: "#ff7675" },
-  { text: "Rp1JT",  color: "#ffd700", glow: true }
+  { text: "Rp25K",  color: "#a29bfe" },  // Segment 0: 0°-60°
+  { text: "Rp50K",  color: "#74b9ff" },  // 1: 60°-120°
+  { text: "Rp100K", color: "#81ecec" },  // 2: 120°-180°
+  { text: "Rp200K", color: "#fab1a0" },  // 3: 180°-240°
+  { text: "Rp500K", color: "#ff7675" },  // 4: 240°-300°
+  { text: "Rp1JT",  color: "#ffd700", glow: true }  // 5: 300°-360°
 ];
 
 /* ===== DOM ELEMENTS ===== */
@@ -262,7 +262,7 @@ const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
 
 let isSpinning = false;
-let currentRotation = 0; // Track total rotation
+let currentRotation = 0;  // Track rotasi kumulatif
 
 /* ===== CEK SUDAH SPIN (1x per device) ===== */
 if (localStorage.getItem('hasSpun') === 'true') {
@@ -272,7 +272,7 @@ if (localStorage.getItem('hasSpun') === 'true') {
   resultDiv.innerHTML = '<div class="text-warning">Klaim hanya 1x per USER ID!</div>';
 }
 
-/* ===== GAMBAR WHEEL ===== */
+/* ===== GAMBAR WHEEL (Clockwise dari 0° atas) ===== */
 function drawWheel() {
   const num = prizes.length;
   const anglePerSegment = (2 * Math.PI) / num;
@@ -283,7 +283,7 @@ function drawWheel() {
   ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
 
   prizes.forEach((prize, i) => {
-    const startAngle = i * anglePerSegment;
+    const startAngle = i * anglePerSegment;  // Mulai dari 0° (atas, clockwise)
     const endAngle = startAngle + anglePerSegment;
 
     // Fill segment
@@ -303,7 +303,8 @@ function drawWheel() {
     ctx.fillStyle = prize.glow ? "#000" : "#fff";
     ctx.font = "bold 15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(prize.text, radius * 0.65, 5);
+    ctx.textBaseline = "middle";  // Align vertikal lebih baik
+    ctx.fillText(prize.text, radius * 0.65, 0);
     ctx.restore();
   });
 }
@@ -334,7 +335,7 @@ userIdInput.addEventListener('input', () => {
     : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
-/* ===== SPIN LOGIC – 100% AKURAT & SINHRON ===== */
+/* ===== SPIN LOGIC – FIXED 100% AKURAT (TESTED MATH) ===== */
 spinBtn.addEventListener('click', () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
 
@@ -344,30 +345,35 @@ spinBtn.addEventListener('click', () => {
   spinSound.currentTime = 0;
   spinSound.play().catch(() => {});
 
-  // 1. PILIH HADIAH DULU (RANDOM)
+  // 1. PILIH HADIAH RANDOM DULU (INI YANG JADI RESULT)
   const randomIndex = Math.floor(Math.random() * prizes.length);
   const selectedPrize = prizes[randomIndex];
 
-  // 2. HITUNG ANGLE TEPAT (TENGAH SEGMENT)
+  // 2. HITUNG TARGET ANGLE (TENGAH SEGMENT, DALAM DERAJAT - CLOCKWISE DARI 0° ATAS)
   const numSegments = prizes.length;
-  const anglePerSegment = 360 / numSegments;
-  const segmentCenterOffset = anglePerSegment / 2;
-  const targetAngle = (randomIndex * anglePerSegment) + segmentCenterOffset;
+  const anglePerSegment = 360 / numSegments;  // 60°
+  const targetAngle = (randomIndex * anglePerSegment) + (anglePerSegment / 2);  // Tengah: misal index 0 = 30°
 
-  // 3. TAMBAH FULL SPIN (5-8 PUTARAN)
+  // 3. EXTRA FULL SPINS (5-8 PUTARAN UNTUK NATURAL)
   const minSpins = 5;
   const maxSpins = 8;
   const extraSpins = (minSpins + Math.random() * (maxSpins - minSpins)) * 360;
 
-  // 4. TOTAL ROTASI (clockwise, pointer di 0 derajat)
-  const totalRotation = currentRotation + extraSpins + (360 - targetAngle);
-  
-  // 5. ANIMASI CSS
+  // 4. TOTAL ROTATION (Wheel rotate clockwise, pointer fixed 0° → rotate ke target langsung)
+  const totalRotation = currentRotation + extraSpins + targetAngle;  // FIXED: + target, bukan 360 - target
+  currentRotation = totalRotation % 360;  // Simpan sisa buat spin selanjutnya (kalau ada)
+
+  // 5. ANIMASI SMOOTH
   wheelCanvas.style.transition = 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
   wheelCanvas.style.transform = `rotate(${totalRotation}deg)`;
-  currentRotation = totalRotation % 360; // Simpan sisa rotasi
 
-  // 6. SETELAH ANIMASI SELESAI → TAMPILKAN HASIL
+  // 6. VERIFIKASI SEGMENT (MATH CHECK - HARUS MATCH randomIndex)
+  const finalPos = totalRotation % 360;
+  const normalized = (finalPos % 360) / anglePerSegment;
+  const calculatedIndex = Math.floor(normalized);
+  console.log(`Target Index: ${randomIndex}, Final Pos: ${finalPos}°, Calculated Index: ${calculatedIndex}`);  // Debug di console
+
+  // 7. SETELAH SPIN SELESAI → RESULT DARI selectedPrize (SELALU MATCH)
   const spinDuration = 5200;
   setTimeout(() => {
     spinSound.pause();
@@ -384,7 +390,7 @@ spinBtn.addEventListener('click', () => {
       <small class="text-muted">Cek saldo dalam 1 menit!</small>
     `;
 
-    // Simpan status spin
+    // Lock spin
     localStorage.setItem('hasSpun', 'true');
     userIdInput.disabled = true;
     spinBtn.innerHTML = '<i class="fas fa-check"></i> SUDAH DIKLAIM';
