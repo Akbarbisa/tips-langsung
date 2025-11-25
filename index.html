@@ -61,39 +61,23 @@
       font-weight: 600;
       text-shadow: 0 0 10px #0f0;
     }
-    .ribbon {
+   .ribbon {
     position: absolute;
-    top: 30px;             
-    left: -90px;           
-    width: 320px;           
-    padding: 12px 0;
-    background: #ff0044;
-    background: linear-gradient(135deg, #ff0044 0%, #c70039 100%);
-    color: #ffffff;
+    top: 8px;                   
+    left: -45px;                
+    width: 180px;               
+    padding: 6px 0;
+    background: linear-gradient(45deg, #ff0044, #e0003a);
+    color: #fff;
+    font-size: 13px;            
     font-weight: bold;
-    font-size: 17px;
     text-align: center;
     transform: rotate(-45deg);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    z-index: 99999;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    z-index: 9999;
     white-space: nowrap;
-    pointer-events: none;  
+    letter-spacing: 0.5px;
 }
-.ribbon:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 0;
-    height: 0;
-    border: 25px solid transparent;
-}
-.ribbon:before {
-    left: -50px;
-    border-right-color: #c70039;
-}
-.ribbon:after {
-    right: -50px;
-    border-left-color: #c70039;
 }
     .code-input {
       background: #000;
@@ -407,6 +391,7 @@ drawWheel();
 </script>
 </body>
 </html>
+
 
 
 
