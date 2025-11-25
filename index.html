@@ -28,25 +28,26 @@
     }
     .spin-container {
       width: 100%;
-      max-width: 390px;
+      max-width: 380px;
       margin: 20px auto;
       background: rgba(17, 17, 17, 0.95);
       border-radius: 32px;
-      padding: 28px 20px;
-      box-shadow: 0 0 40px rgba(0, 255, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.4);
+      padding: 24px 18px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2);
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       border: 3px solid #00ff00;
       backdrop-filter: blur(10px);
     }
     .logo {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
       background: linear-gradient(45deg, #ffd700, #ff6b6b, #f9ca24);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      padding: 0 10px;
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -55,38 +56,77 @@
     }
     .subtitle {
       color: #0f0;
-      font-size: 1.1rem;
+      font-size: 1rem;
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
+      padding: 0 10px;
       font-weight: 600;
-      text-shadow: 0 0 10px #0f0;
+      text-shadow: 0 0 8px #0f0;
+      line-height: 1.3;
     }
     .ribbon {
       position: absolute;
-      top: 12px;
-      right: -50px;
+      top: 22px;
+      right: -38px;
       background: linear-gradient(45deg, #e74c3c, #c0392b);
       color: #fff;
-      padding: 10px 70px;
-      font-size: 0.9rem;
+      padding: 5px 45px;
+      font-size: 0.65rem;
       font-weight: bold;
       transform: rotate(45deg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       z-index: 5;
-      letter-spacing: 1px;
+      letter-spacing: 0.3px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 20px;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #444;
+      color: #aaa;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+    .tab-btn.active {
+      background: linear-gradient(45deg, #00ff00, #00cc00);
+      border-color: #00ff00;
+      color: #000;
+      box-shadow: 0 0 15px rgba(0,255,0,0.5);
+    }
+    .tab-btn:hover:not(.active) {
+      border-color: #666;
+      color: #fff;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
     }
     .code-input {
       background: #000;
       border: 3px solid #0f0;
       color: #fff;
       text-align: center;
-      font-size: 1.4rem;
-      letter-spacing: 3px;
-      border-radius: 18px;
-      padding: 14px;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      border-radius: 16px;
+      padding: 12px 10px;
       font-weight: bold;
-      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.25);
       text-transform: uppercase;
+      margin: 0 auto;
+      max-width: 100%;
     }
     .code-input::placeholder {
       color: #0f0;
@@ -95,26 +135,27 @@
     }
     .hint {
       color: #0f0 !important;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 8px;
+      padding: 0 10px;
       font-weight: 500;
-      text-shadow: 0 0 8px #0f0;
+      text-shadow: 0 0 6px #0f0;
+      line-height: 1.3;
     }
     #wheel-container {
       position: relative;
-      width: 240px;
-      height: 240px;
-      margin: 30px auto;
+      width: 260px;
+      height: 260px;
+      margin: 20px auto;
       border-radius: 50%;
       background: radial-gradient(circle, #111 50%, #000 100%);
       box-shadow:
-        0 0 50px #ff0,
-        0 0 80px #ff0,
-        0 0 120px rgba(255, 215, 0, 0.6),
-        inset 0 0 40px rgba(0,0,0,0.9);
-      padding: 14px;
-      border: 4px solid #ffd700;
+        0 0 20px rgba(255, 255, 0, 0.4),
+        0 0 35px rgba(255, 255, 0, 0.2),
+        inset 0 0 30px rgba(0,0,0,0.9);
+      padding: 10px;
+      border: 3px solid #ffd700;
     }
     #wheel {
       width: 100%;
@@ -124,14 +165,14 @@
     }
     .pointer {
       position: absolute;
-      top: -15px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%);
       width: 0; height: 0;
-      border-left: 22px solid transparent;
-      border-right: 22px solid transparent;
-      border-top: 44px solid #f1c40f;
-      filter: drop-shadow(0 6px 12px #000);
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 36px solid #f1c40f;
+      filter: drop-shadow(0 3px 6px #000);
       z-index: 10;
       animation: bounce 1.5s infinite;
     }
@@ -144,12 +185,12 @@
       border: none;
       color: #000;
       font-weight: bold;
-      font-size: 1.1rem;
-      padding: 16px;
+      font-size: 1rem;
+      padding: 14px 16px;
       border-radius: 50px;
       width: 100%;
-      margin-top: 20px;
-      box-shadow: 0 10px 30px rgba(255,107,107,0.7);
+      margin-top: 16px;
+      box-shadow: 0 8px 20px rgba(255,107,107,0.5);
       transition: all 0.3s;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -166,27 +207,28 @@
     }
     #result {
       min-height: 80px;
-      padding: 18px;
-      border-radius: 20px;
-      margin-top: 20px;
+      padding: 16px 12px;
+      border-radius: 18px;
+      margin-top: 16px;
       background: rgba(0,0,0,0.85);
       font-weight: bold;
       text-align: center;
       border: 2px solid #ffd700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
     }
     .jackpot-glow {
       animation: jackpot 1.8s infinite alternate;
-      font-size: 1.8rem !important;
+      font-size: 1.5rem !important;
+      line-height: 1.4;
     }
     @keyframes jackpot {
       from {
-        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0;
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff0, 0 0 30px #ff0;
         transform: scale(1);
       }
       to {
-        text-shadow: 0 0 25px #fff, 0 0 50px #ff0, 0 0 80px #ff0, 0 0 100px #ffd700;
-        transform: scale(1.05);
+        text-shadow: 0 0 15px #fff, 0 0 30px #ff0, 0 0 50px #ff0;
+        transform: scale(1.03);
       }
     }
     .confetti {
@@ -204,14 +246,161 @@
         opacity: 0;
       }
     }
+    .history-table {
+      background: rgba(0,0,0,0.7);
+      border-radius: 15px;
+      padding: 15px;
+      margin-top: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .history-table table {
+      width: 100%;
+      color: #fff;
+    }
+    .history-table th {
+      background: linear-gradient(45deg, #00ff00, #00cc00);
+      color: #000;
+      padding: 10px 8px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .history-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #333;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .history-table tr:hover td {
+      background: rgba(0,255,0,0.1);
+    }
+    .btn-view-history {
+      background: linear-gradient(45deg, #00ff00, #00cc00);
+      border: none;
+      color: #000;
+      font-weight: bold;
+      font-size: 0.95rem;
+      padding: 12px 20px;
+      border-radius: 50px;
+      width: 100%;
+      margin-top: 16px;
+      box-shadow: 0 8px 20px rgba(0,255,0,0.4);
+      transition: all 0.3s;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-view-history:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0,255,0,0.6);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      overflow-y: auto;
+    }
+    .modal.show {
+      display: block;
+    }
+    .modal-content {
+      background: rgba(17, 17, 17, 0.98);
+      margin: 5% auto;
+      padding: 25px;
+      border: 3px solid #00ff00;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 40px rgba(0,255,0,0.5);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+    @keyframes modalSlideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #00ff00;
+    }
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ffd700, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .close-btn {
+      background: #e74c3c;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .close-btn:hover {
+      background: #c0392b;
+      transform: rotate(90deg);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+    }
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
     @media (max-width: 400px) {
-      .spin-container { padding: 24px 16px; }
-      #wheel-container { width: 210px; height: 210px; margin: 25px auto; }
-      .logo { font-size: 2rem; }
-      .subtitle { font-size: 1rem; }
-      .code-input { font-size: 1.3rem; padding: 12px; }
-      .btn-spin { font-size: 1rem; padding: 14px; }
-      .pointer { border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 40px solid #f1c40f; }
+      .spin-container { padding: 20px 15px; }
+      #wheel-container { width: 240px; height: 240px; margin: 18px auto; }
+      .logo { font-size: 1.85rem; }
+      .subtitle { font-size: 0.95rem; }
+      .code-input { font-size: 1.2rem; padding: 11px 8px; letter-spacing: 1.5px; }
+      .btn-spin { font-size: 0.95rem; padding: 13px 14px; }
+      .pointer { 
+        border-left: 16px solid transparent; 
+        border-right: 16px solid transparent; 
+        border-top: 32px solid #f1c40f; 
+        top: -9px;
+      }
+      .jackpot-glow { font-size: 1.3rem !important; }
+      .tab-btn { font-size: 0.85rem; padding: 10px 15px; }
+      .history-table th { font-size: 0.8rem; padding: 8px 5px; }
+      .history-table td { font-size: 0.75rem; padding: 8px 5px; }
+    }
+    @media (max-width: 360px) {
+      .spin-container { padding: 18px 12px; max-width: 340px; }
+      #wheel-container { width: 220px; height: 220px; margin: 16px auto; }
+      .logo { font-size: 1.7rem; }
+      .subtitle { font-size: 0.9rem; }
+      .code-input { font-size: 1.1rem; padding: 10px 6px; }
+      .hint { font-size: 0.8rem; }
+      .btn-spin { font-size: 0.9rem; padding: 12px; }
+      .jackpot-glow { font-size: 1.2rem !important; }
     }
   </style>
 </head>
@@ -220,23 +409,69 @@
   <div class="ribbon">USER ID = HADIAH!</div>
   <div class="logo">KISAH SLOT</div>
   <div class="subtitle">Klaim Hadiahmu dengan USER ID!</div>
-  <input type="text" id="userId" class="form-control code-input" placeholder="MASUKKAN USER ID" maxlength="20" autocomplete="off"/>
-  <p class="hint">Masukkan USER ID kamu setelah daftar!</p>
-  <div id="wheel-container">
-    <div class="pointer"></div>
-    <canvas id="wheel" width="212" height="212"></canvas>
+  
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('hadiah')">
+      <i class="fas fa-gift"></i> Hadiah
+    </button>
+    <button class="tab-btn" onclick="switchTab('riwayat')">
+      <i class="fas fa-history"></i> Riwayat
+    </button>
   </div>
-  <button class="btn btn-spin" id="spinBtn" disabled>
-    <i class="fas fa-lock"></i> MASUKKAN USER ID
-  </button>
-  <div id="result"></div>
+  
+  <div id="hadiah-tab" class="tab-content active">
+    <input type="text" id="userId" class="form-control code-input" placeholder="MASUKKAN USER ID" maxlength="20" autocomplete="off"/>
+    <p class="hint">Masukkan USER ID kamu setelah daftar!</p>
+    <div id="wheel-container">
+      <div class="pointer"></div>
+      <canvas id="wheel" width="240" height="240"></canvas>
+    </div>
+    <button class="btn btn-spin" id="spinBtn" disabled>
+      <i class="fas fa-lock"></i> MASUKKAN USER ID
+    </button>
+    <div id="result"></div>
+  </div>
+  
+  <div id="riwayat-tab" class="tab-content">
+    <div class="history-table" id="historyPreview">
+      <div class="text-center text-muted">
+        <i class="fas fa-spinner fa-spin"></i> Memuat riwayat...
+      </div>
+    </div>
+    <button class="btn-view-history" onclick="openModal()">
+      <i class="fas fa-list"></i> Lihat Semua Riwayat
+    </button>
+  </div>
 </div>
+
+<div id="historyModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">
+        <i class="fas fa-trophy"></i> 50 Riwayat Spin Terakhir
+      </h3>
+      <button class="close-btn" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="history-table" id="fullHistoryTable">
+      <div class="text-center text-muted">
+        <i class="fas fa-spinner fa-spin"></i> Memuat...
+      </div>
+    </div>
+  </div>
+</div>
+
 <audio id="spinSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
 </audio>
 <audio id="winSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3" type="audio/mpeg">
 </audio>
+<audio id="clickSound" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 const prizes = [
   {text: "Rp25K", color: "#a29bfe"},
@@ -254,9 +489,111 @@ const resultDiv = document.getElementById('result');
 const userIdInput = document.getElementById('userId');
 const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
+const clickSound = document.getElementById('clickSound');
 
 let isSpinning = false;
 let currentRotation = 0;
+let clickInterval;
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  
+  if (tab === 'hadiah') {
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('hadiah-tab').classList.add('active');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('riwayat-tab').classList.add('active');
+    loadHistory(10, 'historyPreview');
+  }
+}
+
+function openModal() {
+  document.getElementById('historyModal').classList.add('show');
+  loadHistory(50, 'fullHistoryTable');
+}
+
+function closeModal() {
+  document.getElementById('historyModal').classList.remove('show');
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('historyModal');
+  if (event.target === modal) {
+    closeModal();
+  }
+}
+
+async function loadHistory(limit = 10, targetId) {
+  const container = document.getElementById(targetId);
+  container.innerHTML = '<div class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Memuat...</div>';
+  
+  try {
+    const response = await fetch(`/api/history?limit=${limit}`);
+    const data = await response.json();
+    
+    if (data.success && data.history.length > 0) {
+      let html = '<table class="table-borderless w-100"><thead><tr>';
+      html += '<th>NO</th><th>USERNAME</th><th>HADIAH</th>';
+      if (limit > 10) html += '<th>WAKTU</th>';
+      html += '</tr></thead><tbody>';
+      
+      data.history.forEach((item, index) => {
+        html += '<tr>';
+        html += `<td>${index + 1}</td>`;
+        html += `<td><i class="fas fa-user text-warning"></i> ${item.username}</td>`;
+        html += `<td><span class="text-success fw-bold">${item.prize}</span></td>`;
+        if (limit > 10) {
+          const date = new Date(item.time);
+          html += `<td style="font-size:0.7rem">${date.toLocaleString('id-ID', {dateStyle: 'short', timeStyle: 'short'})}</td>`;
+        }
+        html += '</tr>';
+      });
+      
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    } else {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>Belum ada riwayat spin</p>
+          <small>Jadilah yang pertama!</small>
+        </div>
+      `;
+    }
+  } catch (error) {
+    container.innerHTML = `
+      <div class="text-center text-danger">
+        <i class="fas fa-exclamation-circle"></i>
+        <p>Gagal memuat riwayat</p>
+        <small>${error.message}</small>
+      </div>
+    `;
+  }
+}
+
+async function saveSpinToDatabase(username, prize, prizeAmount) {
+  try {
+    const response = await fetch('/api/spin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username,
+        prize: prize,
+        prize_amount: prizeAmount
+      })
+    });
+    
+    const data = await response.json();
+    return data.success;
+  } catch (error) {
+    console.error('Error saving spin:', error);
+    return false;
+  }
+}
 
 if (localStorage.getItem('hasSpun') === 'true') {
   userIdInput.disabled = true;
@@ -337,14 +674,22 @@ userIdInput.addEventListener('input', () => {
   spinBtn.innerHTML = valid ? '<i class="fas fa-play"></i> SPIN & KLAIM!' : '<i class="fas fa-lock"></i> MASUKKAN USER ID';
 });
 
-spinBtn.addEventListener('click', () => {
+spinBtn.addEventListener('click', async () => {
   if (isSpinning || localStorage.getItem('hasSpun') === 'true') return;
   
   isSpinning = true;
   spinBtn.disabled = true;
   resultDiv.innerHTML = '';
   
+  spinSound.currentTime = 0;
+  spinSound.volume = 0.6;
   spinSound.play().catch(() => {});
+  
+  clickSound.volume = 0.4;
+  clickInterval = setInterval(() => {
+    clickSound.currentTime = 0;
+    clickSound.play().catch(() => {});
+  }, 150);
   
   const randomIndex = Math.floor(Math.random() * prizes.length);
   
@@ -354,10 +699,17 @@ spinBtn.addEventListener('click', () => {
   
   wheel.style.transform = `rotate(${currentRotation}deg)`;
   
-  setTimeout(() => {
+  setTimeout(async () => {
+    clearInterval(clickInterval);
     spinSound.pause();
-    winSound.play().catch(() => {});
-    createConfetti();
+    spinSound.currentTime = 0;
+    
+    setTimeout(() => {
+      winSound.currentTime = 0;
+      winSound.volume = 0.8;
+      winSound.play().catch(() => {});
+      createConfetti();
+    }, 200);
     
     currentRotation = currentRotation % 360;
     wheel.style.transition = 'none';
@@ -369,11 +721,14 @@ spinBtn.addEventListener('click', () => {
     const prize = prizes[randomIndex];
     const userId = userIdInput.value.trim().toUpperCase();
   
+    const saved = await saveSpinToDatabase(userId, prize.text, prize.text);
+    
     resultDiv.innerHTML = `
       <div class="text-success jackpot-glow">SELAMAT ${userId}!</div>
-      <div class="text-warning fs-2 fw-bold mt-2">Kamu Dapat ${prize.text}</div>
-      <small class="text-success mt-2 d-block">Hadiah masuk ke USER ID: <b>${userId}</b></small>
-      <small class="text-muted">Cek saldo dalam 1 menit!</small>
+      <div class="text-warning fw-bold mt-2" style="font-size: 1.8rem;">Kamu Dapat ${prize.text}</div>
+      <small class="text-success mt-2 d-block" style="font-size: 0.85rem;">Hadiah masuk ke USER ID: <b>${userId}</b></small>
+      <small class="text-muted" style="font-size: 0.8rem;">Cek saldo dalam 1 menit!</small>
+      ${saved ? '<small class="text-info d-block mt-1" style="font-size:0.7rem;"><i class="fas fa-check-circle"></i> Tersimpan di riwayat</small>' : ''}
     `;
     
     localStorage.setItem('hasSpun', 'true');
@@ -384,6 +739,7 @@ spinBtn.addEventListener('click', () => {
 });
 
 drawWheel();
+loadHistory(10, 'historyPreview');
 </script>
 </body>
 </html>
