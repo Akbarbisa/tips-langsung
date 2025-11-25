@@ -66,17 +66,17 @@
     }
     .ribbon {
       position: absolute;
-      top: 22px;
-      right: -38px;
+      top: 28px;
+      right: -35px;
       background: linear-gradient(45deg, #e74c3c, #c0392b);
       color: #fff;
-      padding: 5px 45px;
-      font-size: 0.65rem;
+      padding: 4px 40px;
+      font-size: 0.6rem;
       font-weight: bold;
       transform: rotate(45deg);
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       z-index: 5;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
     }
     .tabs {
       display: flex;
@@ -531,9 +531,19 @@ async function loadHistory(limit = 10, targetId) {
   
   try {
     const response = await fetch(`/api/history?limit=${limit}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Response bukan JSON");
+    }
+    
     const data = await response.json();
     
-    if (data.success && data.history.length > 0) {
+    if (data.success && data.history && data.history.length > 0) {
       let html = '<table class="table-borderless w-100"><thead><tr>';
       html += '<th>NO</th><th>USERNAME</th><th>HADIAH</th>';
       if (limit > 10) html += '<th>WAKTU</th>';
@@ -563,6 +573,7 @@ async function loadHistory(limit = 10, targetId) {
       `;
     }
   } catch (error) {
+    console.error('Error loading history:', error);
     container.innerHTML = `
       <div class="text-center text-danger">
         <i class="fas fa-exclamation-circle"></i>
