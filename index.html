@@ -462,14 +462,20 @@
   </div>
 </div>
 
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+</audio>
 <audio id="spinSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-suspense-waiting-667.mp3" type="audio/mpeg">
 </audio>
 <audio id="winSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3" type="audio/mpeg">
 </audio>
 <audio id="clickSound" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+</audio>
+<audio id="winBigSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-fantasy-game-success-notification-270.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -487,13 +493,25 @@ const ctx = wheel.getContext('2d');
 const spinBtn = document.getElementById('spinBtn');
 const resultDiv = document.getElementById('result');
 const userIdInput = document.getElementById('userId');
+const bgMusic = document.getElementById('bgMusic');
 const spinSound = document.getElementById('spinSound');
 const winSound = document.getElementById('winSound');
 const clickSound = document.getElementById('clickSound');
+const winBigSound = document.getElementById('winBigSound');
 
 let isSpinning = false;
 let currentRotation = 0;
 let clickInterval;
+
+document.addEventListener('DOMContentLoaded', () => {
+  bgMusic.volume = 0.2;
+  
+  document.body.addEventListener('click', () => {
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  }, { once: true });
+});
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -716,9 +734,15 @@ spinBtn.addEventListener('click', async () => {
     spinSound.currentTime = 0;
     
     setTimeout(() => {
-      winSound.currentTime = 0;
-      winSound.volume = 0.8;
-      winSound.play().catch(() => {});
+      if (randomIndex >= 4) {
+        winBigSound.currentTime = 0;
+        winBigSound.volume = 0.9;
+        winBigSound.play().catch(() => {});
+      } else {
+        winSound.currentTime = 0;
+        winSound.volume = 0.7;
+        winSound.play().catch(() => {});
+      }
       createConfetti();
     }, 200);
     
